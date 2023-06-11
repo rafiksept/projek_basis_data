@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\InputNilaiController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,3 +17,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('example');
 });
+
+Route::get('/melihatMahasiswa',[MahasiswaController::class, 'viewMahasiswa']);
+Route::get('/inputMahasiswa',[MahasiswaController::class, 'createMahasiswa']);
+Route::post('/actionInputMahasiswa',[MahasiswaController::class, 'actionCreateMahasiswa']);
+
+Route::get('/inputNilai', [InputNilaiController::class, "inputNilai"]);
+Route::get('/inputNilaiMahasiswa/{kelas}', [InputNilaiController::class, "inputNilaiMahasiswa"]);
+Route::get('/getMatkul/{prodi}',[InputNilaiController::class, "getMatkul"]);
+Route::get('/getMahasiswa/{matkul}',[InputNilaiController::class, "getMahasiswa"]);

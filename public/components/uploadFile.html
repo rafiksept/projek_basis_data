@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - youtube.com/codingnepal -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link rel="stylesheet" href="../style/componentStyle.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div class="wrapper" style="z-index: 2">
+      <div class="text-form">
+        <h1>Upload File</h1>
+        <p>
+          file berupa csv/xlsx yang berisi nilai dari mata kuliah yang diikuti
+          per-mahasiswa.
+        </p>
+      </div>
+      <div class="file-container">
+        <label for="file-input" class="file-label" style="margin: 5%;">
+          <form action="../php/uploadFile.php">
+            <input
+              class="file-input"
+              type="file"
+              name="file"
+              id="file-input"
+              style="display: none"
+            />
+            <i class="fas fa-cloud-upload-alt"></i>
+            <p>Browse File untuk diupload</p>
+          </form>
+          <div class="button-container">
+            <button class="save-button" type="button">Simpan File</button>
+            <!-- <button class="back-button" type="button" onclick="history.back()">Kembali</button> -->
+          </div>
+        </label>
+      </div>
+      <section class="progress-area"></section>
+      <section class="uploaded-area"></section>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var fileInput = document.querySelector(".file-input");
+
+        fileInput.addEventListener("change", function () {
+          var fileLabel = document.querySelector(".file-label");
+          fileLabel.querySelector("p").textContent = fileInput.files[0].name;
+        });
+      });
+    </script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var fileInput = document.querySelector(".file-input");
+        var fileName = document.querySelector("#file-name");
+
+        fileInput.addEventListener("change", function () {
+          fileName.textContent = fileInput.files[0].name;
+        });
+      });
+
+      function saveFile() {
+        var fileInput = document.querySelector(".file-input");
+        var file = fileInput.files[0];
+        
+        // Membuat objek FormData untuk mengirim file ke server
+        var formData = new FormData();
+        formData.append("file", file);
+        
+        // Membuat objek AJAX
+        var xhr = new XMLHttpRequest();
+        
+        // Mengatur callback untuk menangani respon dari server
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+              // Respon sukses dari server
+              console.log("File berhasil diunggah.");
+            } else {
+              // Respon error dari server
+              console.error("Terjadi kesalahan saat mengunggah file.");
+            }
+          }
+        };
+        
+        // Mengirim request ke server dengan metode POST dan data FormData
+        xhr.open("POST", "upload.php", true);
+        xhr.send(formData);
+      }
+      
+    </script>
+
+    <script src="../js/componentsScript.js"></script>
+  </body>
+</html>
