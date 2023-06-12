@@ -107,7 +107,7 @@
                     Input Nilai
                 </div>
 
-            <form method="POST" action = "/inputNilaiMahasiswa">
+            <form method="POST" action = "/inputNilai">
                 @csrf
       
               <div class="filter">
