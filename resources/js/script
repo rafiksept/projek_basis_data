@@ -1,0 +1,15 @@
+// Ambil semua elemen select dengan class inputbox
+const selects = document.querySelectorAll('.inputbox select');
+
+// Tambahkan event listener untuk setiap select
+selects.forEach(function(select) {
+  // Tambahkan event listener saat ada perubahan pada select
+  select.addEventListener('click', function() {
+    const selectWrapper = this.parentElement.querySelector('.select-wrapper');
+    selectWrapper.classList.toggle('active');
+  });
+});
+
+document.getElementById("register").addEventListener("click", myFunction);
+function myFunction() {
+  window.location.href="new-acc.html"; }

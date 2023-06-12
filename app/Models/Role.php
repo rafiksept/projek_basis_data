@@ -9,5 +9,5 @@ class Role extends Model
 {
     use HasFactory;
 
-    protected $fillable =['nik','nama','prodi'];
+    protected $fillable =['nama','prodi'];
 }

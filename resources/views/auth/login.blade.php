@@ -6,36 +6,54 @@
     </div>
 @endif
 
-<form method="POST" action="{{ route('login') }}">
-    @csrf
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Outfit&display=swap" rel="stylesheet" />
+    <link href="{{ asset('css/style_login.css') }}" rel="stylesheet" />
 
-    <div>
-        <label for="email">Email:</label>
-        <input type="email" name="email" id="email" value="{{ old('email') }}" required autofocus>
-    </div>
-
-    <div>
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required>
-    </div>
-
-    <div>
-        <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-        <label for="remember">Ingat Akun </label>
-    </div>
-
-    <div>
-        <button type="submit">Login</button>
-    </div>
-
-    <div>
-        <a href="{{ route('forget-password') }}" class="btn btn-primary">Lupa Password</a>
-    </div>
-
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
     
-    <div>
-        <a href="{{ route('sign-up') }}" class="btn btn-primary">Daftar</a>
+    <img class="ftmm" src="{{ asset('img/images_login/sidecard2.svg') }}">
+    <div class="container">
+        <div class="sidebox">
+        </div>
+        <div class="logininfo">
+            <div class="formbox">
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
+                    <div class="teks-log">
+                        <img src="{{ asset('img/images_login/ftmm-logo.png') }}">
+                        <h1 class="teks-h1-log">Selamat Datang !</h1>
+                        <h2 class="teks-h2-log">Website ini digunakan untuk menilai Capaian Pembelajaran Prodi maupun Mahasiswa</h2>
+                    </div>
+                    <div class="inputbox">
+                        <input type="text" name="email" placeholder="Email/NIK" required autofocus>
+                        <img class="right-icon-log" src="{{ asset('img/images_login/@-icon.svg') }}">
+                    </div>
+                    <div class="inputbox">
+                        <input type="password" name="password" placeholder="Password" required>
+                        <img class="right-icon-log" src="{{ asset('img/images_login/lock-icon.svg') }}">
+                    </div>
+                    <div class="rememberme">
+                        <label><input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Ingat Akun</label>
+                        <a href="{{ route('forget-password') }}">Lupa Sandi?</a>
+                    </div>
+                    <div class="login-button">
+                        <button type="submit" class="btn">Login</button>
+                    </div>
+                    <div class="register">
+                        <p>Belum punya akun? <a href="{{ route('sign-up') }}" class="register-link">Daftar</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-
-
-</form>
+    
+</body>
+</html>
