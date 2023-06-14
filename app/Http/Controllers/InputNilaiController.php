@@ -14,13 +14,13 @@ class InputNilaiController extends Controller
     }
 
     public function getMatkul($prodi){
-        $matkul = DB::table('mata_kuliahs') -> where('prodi', $prodi) -> get();
+        $matkul = DB::table('kelas_matkuls') -> where('prodi', $prodi) -> get();
 
         return Response::json($matkul);
     }
 
     public function getMahasiswa($matkul){
-        $kelas = DB::table('kelas_matkuls')  -> where('mata_kuliah_id', $matkul) -> get();
+        $kelas = DB::table('kelas_matkuls')  -> where('id', $matkul) -> get();
         
         $resultKelas = collect(json_decode($kelas))->pluck('id')->all();
         $relasiKelas = DB::table('mahasiswa_to_kelas_matkuls') -> whereIn('kelas_matkul_id', $resultKelas)  -> get();
