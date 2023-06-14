@@ -31,7 +31,7 @@ class InputNilaiController extends Controller
 
     }
 
-    public function inputNilaiMahasiswa(Request $request, $kelas){
+    public function inputNilaiMahasiswa(Request $request){
         // 1. buatlah validate data, cuman validate data yang banyak input buat cuma satu attribute
 
 
