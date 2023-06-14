@@ -28,7 +28,10 @@ class InputNilaiController extends Controller
         $relasiKelas = DB::table('mahasiswa_to_kelas_matkuls') -> whereIn('kelas_matkul_id', $resultKelas)  -> get();
         $resultMahasiswa = collect(json_decode($relasiKelas))->pluck('id')->all();
 
-        $mahasiswa = DB::table('mahasiswas') -> whereIn('id', $resultMahasiswa) -> get();
+        $mahasiswa = DB::table('mahasiswas')
+        ->join('nilais', 'mahasiswas.id', '=', 'nilais.mahasiswa_id')
+        ->select('mahasiswas.*', 'nilais.*')
+        ->get();
         return Response::json($mahasiswa);
 
     }
@@ -63,12 +66,16 @@ class InputNilaiController extends Controller
 
         
         foreach ($nilai['nim'] as $key => $value) {
-            $mahasiswas = DB::table('mahasiswas') -> where('nim',$nilai['nim'][$key]) -> get();
-            Nilai::create([
-                'mahasiswa_id' => $mahasiswas[0] -> id,
+            $mahasiswa_id= DB::table('mahasiswas') -> where('nim',$nilai['nim'][$key]) -> get();
+
+            $nilais = Nilai::where('mahasiswa_id', $mahasiswa_id[0] -> id)->first();
+
+            $nilais-> update([
+                'mahasiswa_id' => $mahasiswa_id[0] -> id,
                 'kelas_matkul_id' => $kelas,
                 'nilai' => $nilai['nilai'][$key],
-                ]);}
+                ]);
+            }
 
         return redirect('/inputNilai');
 

@@ -282,6 +282,9 @@
             input.step = "any";
             input.name = "nilai[]";
             input.placeholder = "Nilai";
+            input.value = item.nilai;
+            input.setAttribute("min", "0");
+            input.setAttribute("max", "100");
             nilaiCell.appendChild(input);
 
             // Menambahkan sel-sel ke dalam baris
