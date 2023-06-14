@@ -204,6 +204,7 @@
           .then(function(data) {
               // Lakukan sesuatu dengan data yang diterima
               var matkulFilter = document.getElementById("matkul-filter");
+              console.log(data)
               
 
     // Melakukan perulangan pada data dan menambahkan opsi ke elemen select
