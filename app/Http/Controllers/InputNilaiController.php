@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use App\Models\Nilai;
 use Response;
 
 class InputNilaiController extends Controller
@@ -31,7 +33,7 @@ class InputNilaiController extends Controller
 
     }
 
-    public function inputNilaiMahasiswa(Request $request){
+    public function inputNilaiMahasiswa(Request $request, $kelas){
         // 1. buatlah validate data, cuman validate data yang banyak input buat cuma satu attribute
 
 
@@ -39,9 +41,38 @@ class InputNilaiController extends Controller
         // kalian cuma fokus ke sini. itukan nilainya banyak ya barti insert ke tabelnya pake perulangan.
 
         // udah gitu aja semangat
+        $rules = [
+            'nim.*' => 'required|max:12',
+            'nilai.*' => 'required|numeric|max:100|min:0'];
+        
+        $messages = [
+            'nim.*.required' => 'nim field is required.',
+            'nilai.*.required' => "nilai is required"
+            ];
+        
+        $validator = Validator::make($request->all(), $rules, $messages);
 
+        
+        if ($validator->fails()) {
+            return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput();}
+
+        $nilai = $request->all();
+        
+
+        
+        foreach ($nilai['nim'] as $key => $value) {
+            $mahasiswas = DB::table('mahasiswas') -> where('nim',$nilai['nim'][$key]) -> get();
+            Nilai::create([
+                'mahasiswa_id' => $mahasiswas[0] -> id,
+                'kelas_matkul_id' => $kelas,
+                'nilai' => $nilai['nilai'][$key],
+                ]);}
 
         return redirect('/inputNilai');
+
+        
     }
 
 }

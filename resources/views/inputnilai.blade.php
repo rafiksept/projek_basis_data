@@ -108,6 +108,7 @@
                 </div>
 
             <form method="POST" action = "/inputNilaiMahasiswa" id="nilaimasuk">
+
                 @csrf
       
               <div class="filter">
@@ -148,6 +149,7 @@
                     <thead>
                       <tr>
                         <th style="background-color: #0E5CA9; font-weight: bold;">No</th>
+                        <th style="background-color: #0E5CA9; font-weight: bold;">NIM</th>
                         <th style="background-color: #0E5CA9; font-weight: bold">Nama Mahasiswa</th>
                         <th style="background-color: #0E5CA9; font-weight: bold">Nilai</th>
                       </tr>
@@ -204,7 +206,7 @@
           .then(function(data) {
               // Lakukan sesuatu dengan data yang diterima
               var matkulFilter = document.getElementById("matkul-filter");
-              console.log(data)
+              
               
 
     // Melakukan perulangan pada data dan menambahkan opsi ke elemen select
@@ -213,6 +215,9 @@
                 option.textContent = item.nama;
                 option.value = item.id;
                 matkulFilter.appendChild(option);
+                // Mengubah atribut 'action' dari elemen form
+
+
               
           })
 
@@ -226,6 +231,10 @@
         
         if(matkulFilter2.value){
             matkulFilter2.addEventListener("change", function() {
+              // Mengubah atribut 'action' dari elemen form
+                var myForm = document.getElementById("nilaimasuk");
+                myForm.action = "/inputNilaiMahasiswa/"+matkulFilter2.value;
+
           // Mendapatkan nilai terpilih dari select
           var matkulValue = matkulFilter2.value;
       
@@ -256,6 +265,14 @@
             var row = document.createElement("tr");
             var idCell = document.createElement("td");
             idCell.textContent = item.id;
+            var nimCell = document.createElement("td");
+            var input = document.createElement("input");
+            input.readOnly = true;
+            nimCell.classList.add("nilai-input");
+            input.type = "text";
+            input.name = "nim[]";
+            input.value = item.nim;
+            nimCell.appendChild(input);
             var nameCell = document.createElement("td");
             nameCell.textContent = item.nama;
             var nilaiCell = document.createElement("td");
@@ -269,6 +286,7 @@
 
             // Menambahkan sel-sel ke dalam baris
             row.appendChild(idCell);
+            row.appendChild(nimCell);
             row.appendChild(nameCell);
             row.appendChild(nilaiCell);
 
