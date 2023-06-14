@@ -27,6 +27,7 @@ Route::post('/actionInputMahasiswa',[MahasiswaController::class, 'actionCreateMa
 
 Route::get('/inputNilai', [InputNilaiController::class, "inputNilai"]);
 Route::get('/inputNilaiMahasiswa/{kelas}', [InputNilaiController::class, "inputNilaiMahasiswa"]);
+Route::get('/nilaiMahasiswa', [InputNilaiController::class, "viewNilaiMahasiswa"]);
 Route::get('/getMatkul/{prodi}',[InputNilaiController::class, "getMatkul"]);
 Route::get('/getMahasiswa/{matkul}',[InputNilaiController::class, "getMahasiswa"]);
 
