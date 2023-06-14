@@ -18,7 +18,7 @@ use App\Http\Controllers\Auth\LoginController;
 */
 
 Route::get('/', function () {
-    return view('example');
+    return view('inputnilai');
 });
 
 Route::get('/melihatMahasiswa',[MahasiswaController::class, 'viewMahasiswa']);
@@ -27,7 +27,6 @@ Route::post('/actionInputMahasiswa',[MahasiswaController::class, 'actionCreateMa
 
 Route::get('/inputNilai', [InputNilaiController::class, "inputNilai"]);
 Route::get('/inputNilaiMahasiswa/{kelas}', [InputNilaiController::class, "inputNilaiMahasiswa"]);
-Route::get('/nilaiMahasiswa', [InputNilaiController::class, "viewNilaiMahasiswa"]);
 Route::get('/getMatkul/{prodi}',[InputNilaiController::class, "getMatkul"]);
 Route::get('/getMahasiswa/{matkul}',[InputNilaiController::class, "getMahasiswa"]);
 
@@ -61,3 +60,6 @@ Route::get('/forget-password', function () {
 Route::get('/sign-up', function () {
     return view('auth.sign-up');
 })->name('sign-up');
+
+//route resource
+Route::resource('/posts', \App\Http\Controllers\PostController::class);

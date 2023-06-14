@@ -15,6 +15,7 @@ class MahasiswaSeeder extends Seeder
     {
         DB::table('mahasiswas')->insert([
             'nim' => "162112133035",
+            'nama'=> "Lopi ketiduran",
             'angkatan' => "2021",
             'prodi' => "TSD"
             

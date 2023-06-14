@@ -503,6 +503,8 @@ a{
     margin-left: 20px;
     border-radius: 10px;
 }
+<<<<<<< HEAD
+=======
 #matkul-filter{
     font-family: 'Outfit';
     font-size: bold;
@@ -510,6 +512,7 @@ a{
     margin-left: 20px;
     border-radius: 10px;
 }
+>>>>>>> bc45dccbe6a0a17ecb738613075a93a6f9672464
 
 #search-input{
     font-family: 'Outfit';
