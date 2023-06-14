@@ -19,10 +19,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Template Stylesheet -->
-    <link href="{{asset('css/style_raport_input.css')}}" rel="stylesheet">
-    <link rel="icon" type="png" href="{{asset('img/Logo UNAIR.png')}}">
+    <link href="{{ asset('css/style_raport_input.css') }}" rel="stylesheet">
+    <link rel="icon" type="png" href="{{ asset('img/Logo UNAIR.png') }}">
     
 </head>
 
@@ -33,7 +33,7 @@
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar">
                 <a href="index.html" class="navbar-brand mx-4 mb-3">
-                    <img src="{{asset('img/logo_ftmm.png')}}" class=""  style="width: auto; height: 45px; margin-top: 20px;" alt="">
+                    <img src="{{ asset('img/logo_ftmm.png') }}" class=""  style="width: auto; height: 45px; margin-top: 20px;" alt="">
                 </a>
 
                 <div class="navbar-nav w-100">
@@ -91,7 +91,7 @@
                         <!-- profile -->
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link" data-bs-toggle="dropdown">
-                                <img class="rounded-circle" src="{{asset('img/user.jpg')}}" alt="" style="width: 40px; height: 40px;">
+                                <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
                                 <!-- <span class="d-none d-lg-inline-flex">John Doe</span> -->
                             </a>
                         </div>
@@ -107,11 +107,13 @@
                     Input Nilai
                 </div>
 
-            <form>
+            <form method="POST" action = "/inputNilai">
+                @csrf
       
               <div class="filter">
                 <label for="prodi-filter" style="font-family: 'Outfit'; font-size: x-large; color: black; font-weight: bold;">Program Studi</label>
                 <select id="prodi-filter">
+                    <option disabled selected>Pilih Prodi</option>
                     <option value="TSD">Teknologi Sains Data</option>
                     <option value="TRKB">Teknik Robotika dan Kecerdasan Buatan</option>
                     <option value="TE">Teknik Elektro</option>
@@ -122,22 +124,18 @@
 
             <div class="filter">
               <label for="prodi-filter" style="font-family: 'Outfit'; font-size: x-large; color: black; font-weight: bold;">Mata Kuliah</label>
-              <select id="prodi-filter">
-                  <option>MK 1</option>
-                  <option>MK 2</option>
-                  <option>MK 3</option>
-                  <option>Mk 4</option>
-                  <option>MK 5</option>
+              <select id="matkul-filter">
+                <option disabled selected>Pilih Matkul</option>
               </select>
           </div>
 
        <div class="upload-container" style="margin-top: 3%">
         <label for="file_upload"> Upload File
-          <img src="{{asset('assets/iconUpload.svg')}}" alt="upload icon" class="iconup" onclick="toggleContent()">
+          <img src="{{ asset('assets/iconUpload.svg') }}" alt="upload icon" class="iconup" onclick="toggleContent()">
         </label>
 
         <div id="content" class="hidden" style="z-index: 2">
-          <script src="{{asset('./js/loadElement.js')}}"></script>
+          <script src="{{ asset('js/loadElement.js') }}"></script>
         </div>
        </div>
           <br /><br />
@@ -155,16 +153,17 @@
                       </tr>
                     </thead>
                     <tbody id="myTableBody">
-                      <script src="{{asset('./js/script_nilai.js')}}"></script>
+                 
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
           </div>
+          <input type="submit" value="Simpan Edit" class="submit-button-hh" />
+            </form>
         </div>
 
-        <input type="submit" value="Simpan Edit" class="submit-button-hh" />
         <!-- Content End -->
 
     </div>
@@ -181,7 +180,113 @@
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
     <!-- Template Javascript -->
-    <script src="{{asset('js/main_raport.js')}}"></script>
+    <script>
+        // Mendapatkan elemen select dan paragraf hasil
+        var selectElement = document.getElementById("prodi-filter");
+        var matkulFilter2 = document.getElementById("matkul-filter");
+        
+      
+        // Menambahkan event listener ke elemen select
+        selectElement.addEventListener("change", function() {
+          // Mendapatkan nilai terpilih dari select
+          var selectedValue = selectElement.value;
+      
+          // Memperbarui teks hasil dengan nilai terpilih
+          var url = `http://127.0.0.1:8000/getMatkul/${selectedValue}`;
+  
+          fetch(url)
+          .then(function(response) {
+              if (response.ok) {
+              return response.json();
+              }
+              throw new Error("Network response was not ok.");
+          })
+          .then(function(data) {
+              // Lakukan sesuatu dengan data yang diterima
+              var matkulFilter = document.getElementById("matkul-filter");
+              console.log(data)
+              
+
+    // Melakukan perulangan pada data dan menambahkan opsi ke elemen select
+            data.forEach(function(item) {
+                var option = document.createElement("option");
+                option.textContent = item.nama;
+                option.value = item.id;
+                matkulFilter.appendChild(option);
+              
+          })
+
+        })
+          .catch(function(error) {
+              // Tangani kesalahan jika terjadi
+              console.log("Ada kesalahan:", error.message);
+          });
+        });
+
+        
+        if(matkulFilter2.value){
+            matkulFilter2.addEventListener("change", function() {
+          // Mendapatkan nilai terpilih dari select
+          var matkulValue = matkulFilter2.value;
+      
+          // Memperbarui teks hasil dengan nilai terpilih
+         
+          var url = `http://127.0.0.1:8000/getMahasiswa/${matkulValue}`;
+  
+          fetch(url)
+          .then(function(response) {
+              if (response.ok) {
+              return response.json();
+              }
+              throw new Error("Network response was not ok.");
+          })
+          .then(function(data) {
+              // Lakukan sesuatu dengan data yang diterima
+            //   var matkulFilter = document.getElementById("matkul-filter");
+            //   matkulFilter.innerHTML = ""
+            console.log(data)
+
+            var tableBody = document.getElementById("myTableBody");
+
+// Menghapus baris yang ada sebelumnya (opsional)
+            tableBody.innerHTML = "";
+
+            // Membuat baris HTML berdasarkan setiap data dari fetch
+            data.forEach(function(item) {
+            var row = document.createElement("tr");
+            var idCell = document.createElement("td");
+            idCell.textContent = item.id;
+            var nameCell = document.createElement("td");
+            nameCell.textContent = item.nama;
+            var nilaiCell = document.createElement("td");
+            var input = document.createElement("input");
+            nilaiCell.classList.add("nilai-input");
+            input.type = "number";
+            input.step = "any";
+            input.name = "nilai[]";
+            input.placeholder = "Nilai";
+            nilaiCell.appendChild(input);
+
+            // Menambahkan sel-sel ke dalam baris
+            row.appendChild(idCell);
+            row.appendChild(nameCell);
+            row.appendChild(nilaiCell);
+
+            // Menambahkan baris ke dalam tabel
+            tableBody.appendChild(row);
+            });
+
+        })
+          .catch(function(error) {
+              // Tangani kesalahan jika terjadi
+              console.log("Ada kesalahan:", error.message);
+          });
+        });
+        }
+
+
+      </script>
+    <script src="{{ asset('js/main_raport.js') }}"></script>
 </body>
 
 </html>
