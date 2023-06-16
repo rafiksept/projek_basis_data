@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\InputNilaiController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\QueryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,3 +64,20 @@ Route::get('/sign-up', function () {
 
 //route resource
 Route::resource('/posts', \App\Http\Controllers\PostController::class);
+
+Route::get('/raport', function () {
+    return view('raportawal');
+});
+
+
+
+Route::get('/query1', [QueryController::class, 'query1']);
+Route::get('/query2', [QueryController::class, 'query2']);
+Route::get('/query3', [QueryController::class, 'query3']);
+Route::get('/query4', [QueryController::class, 'query4']);
+Route::get('/query5', [QueryController::class, 'query5']);
+Route::get('/query6', [QueryController::class, 'query6']);
+Route::get('/query7', [QueryController::class, 'query7']);
+Route::get('/query8', [QueryController::class, 'query8']);
+Route::get('/query9', [QueryController::class, 'query9']);
+Route::get('/query10', [QueryController::class, 'query10']);
