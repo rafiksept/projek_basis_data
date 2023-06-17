@@ -50,3 +50,6 @@ Route::get('/forget-password', function () {
 Route::get('/sign-up', function () {
     return view('auth.sign-up');
 })->name('sign-up');
+
+
+Route::post('/sign-up', [SignupController::class, "register"])->name('sign-up.process')->middleware('guest');
