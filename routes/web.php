@@ -53,3 +53,6 @@ Route::get('/sign-up', function () {
 
 
 Route::post('/sign-up', [SignupController::class, "register"])->name('sign-up.process')->middleware('guest');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
