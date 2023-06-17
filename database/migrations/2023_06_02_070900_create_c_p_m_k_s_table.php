@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('c_p_m_k_s', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('MataKuliah');
+            $table->string('Mata_Kuliah');
             $table->decimal('S1', 3, 2)->default(0.00);
             $table->decimal('S2', 3, 2)->default(0.00);
             $table->decimal('S3', 3, 2)->default(0.00);
