@@ -1,6 +1,5 @@
 <?php
 
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\InputNilaiController;
@@ -9,6 +8,7 @@ use App\Http\Controllers\GantiPassword;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\CplController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\QueryController;
 
 /*
@@ -61,12 +61,13 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 // forget-password button from login page
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/forget-password', function () {
     return view('auth.forget-password');
 })->name('forget-password');
 
-
-// sign-up button from login page
 Route::get('/sign-up', function () {
     return view('auth.sign-up');
 })->name('sign-up');
@@ -90,3 +91,6 @@ Route::get('/query7', [QueryController::class, 'query7']);
 Route::get('/query8', [QueryController::class, 'query8']);
 Route::get('/query9', [QueryController::class, 'query9']);
 Route::get('/query10', [QueryController::class, 'query10']);
+Route::post('/sign-up', [RegisterController::class, 'register'])->name('sign-up.process');//->middleware('guest');
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

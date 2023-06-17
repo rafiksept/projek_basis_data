@@ -16,9 +16,13 @@ return new class extends Migration
             $table->string('image')->nullable();;
             $table->string('name');
             $table->string('email')->unique();
-            $table ->string('nik') -> unique();
+            $table->string('nik') -> unique();
+            $table->string('peran');
+            $table->string('prodi');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('verification_code')->nullable();
+            $table->integer('is_verified')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
