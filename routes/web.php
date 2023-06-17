@@ -4,6 +4,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\InputNilaiController;
+use App\Http\Controllers\Profile;
+use App\Http\Controllers\GantiPassword;
+use App\Http\Controllers\IndexController;
+use App\Http\Controllers\CplController;
 use App\Http\Controllers\Auth\LoginController;
 
 /*
@@ -17,9 +21,14 @@ use App\Http\Controllers\Auth\LoginController;
 |
 */
 
-Route::get('/', function () {
-    return view('inputnilai');
-});
+
+Route::get('/viewIndex', [IndexController::class, 'viewIndex'])->name('viewIndex'); //Untuk Controller Tampilan Awal
+Route::get('/viewCpl', [CplController::class, 'viewCPL'])->name('viewCPL'); //Untuk Controller Tampilan CPL
+
+
+Route::get('/edit-profile', function () {return view('edit-profile');});
+Route::put('/update-profile', [Profile::class, 'updateProfile'])->name('update-profile');
+Route::put('/resetPassword', [GantiPassword::class, 'updatePassword'])->name('updatePassword');
 
 Route::get('/melihatMahasiswa',[MahasiswaController::class, 'viewMahasiswa']);
 Route::get('/inputMahasiswa',[MahasiswaController::class, 'createMahasiswa']);
@@ -47,7 +56,7 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->middleware('web');
 
 // Logout the user
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 // forget-password button from login page
