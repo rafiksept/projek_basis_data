@@ -30,7 +30,7 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
 
-            if ($user->is_verified) {
+            if ($user->email_verified_at !== null) {
                 // Authentication successful and user is verified, redirect user to a protected page
                 return redirect()->intended('/');
             } else {

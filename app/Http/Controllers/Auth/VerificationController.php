@@ -5,6 +5,12 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\VerifiesEmails;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Auth\Events\Verified;
+use Illuminate\Support\Carbon;
+
+
+
 
 class VerificationController extends Controller
 {
@@ -39,4 +45,22 @@ class VerificationController extends Controller
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
     }
+
+    public function verify(EmailVerificationRequest $request)
+{
+    $user = $request->user();
+
+    if ($user->verification_code === $request->route('id')) {
+        $user->email_verified_at = Carbon::now();
+        $user->verification_code = null;
+        $user->save();
+
+        event(new Verified($user));
+
+        return redirect()->route('home')->with('message', 'Email verified successfully!');
+    }
+
+    return redirect()->route('login')->with('error', 'Invalid verification link or token.');
+}
+
 }
