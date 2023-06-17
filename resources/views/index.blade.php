@@ -91,47 +91,40 @@
 
                 <div class="navbar-nav align-items-center ms-auto">
 
-                    <div class="navbar-atas d-flex">
+                    <div class="navbar-atas d-flex" >
                         <!-- notification -->
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link" data-bs-toggle="dropdown">
-                                <i class="fa fa-bell" style="width: 20px;"></i>
+                                <i id="bell-icon" class="fa fa-bell"></i>
                                 <!-- <span class="d-none d-lg-inline-flex">Notificatin tai</span> -->
                             </a>
-                            <div
-                                class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                                <a href="#" class="dropdown-item">
-                                    <h6 class="fw-normal mb-0">Profile updated</h6>
-                                    <small>15 minutes ago</small>
-                                </a>
-                                <hr class="dropdown-divider">
-                                <a href="#" class="dropdown-item">
-                                    <h6 class="fw-normal mb-0">New user added</h6>
-                                    <small>15 minutes ago</small>
-                                </a>
-                                <hr class="dropdown-divider">
-                                <a href="#" class="dropdown-item">
-                                    <h6 class="fw-normal mb-0">Password changed</h6>
-                                    <small>15 minutes ago</small>
-                                </a>
-                                <hr class="dropdown-divider">
-                                <a href="#" class="dropdown-item text-center">
-                                    See all notifications
-                                </a>
+                            <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                                    @if (Session::has('profile_updated'))
+                                        <a href="#" class="dropdown-item">
+                                        <h6 class="fw-normal mb-0">{{ session('profile_updated')['message'] }}</h6>
+                                        <small>{{ session('profile_updated')['time'] }}</small>
+                                    </a>
+                                @endif
                             </div>
                         </div>
+
 
                         <!-- profile -->
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link" data-bs-toggle="dropdown">
-                                <img class="rounded-circle" src="img/user.jpg" alt=""
-                                    style="width: 40px; height: 40px;">
-                                <!-- <span class="d-none d-lg-inline-flex">John Doe</span> -->
+                                @auth
+                                    @if(Auth::user()->image)
+                                        <img src="{{ asset('users/' . Auth::user()->image) }}" alt="image" style="width: 40px; height: 40px;" class="rounded-circle">
+                                    @else
+                                        <img src="{{ asset('users/profiledefault.png') }}" alt="default profile image" style="width: 40px; height: 40px;" class="rounded-circle">
+                                    @endif
+                                @else
+                                    <img src="{{ asset('users/profiledefault.png') }}" alt="default profile image" style="width: 40px; height: 40px;" class="rounded-circle">
+                                @endauth
                             </a>
-                            <div
-                                class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                                <a href="edit-profile" class="dropdown-item">Edit Profile</a>
-                                <a href="#" class="dropdown-item">Log Out</a>
+                            <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                                <a href="#" class="dropdown-item">Edit Profile</a>
+                                <a href="logout" class="dropdown-item">Log Out</a>
                             </div>
                         </div>
                     </div>
