@@ -48,7 +48,7 @@ class LoginController extends Controller
 
     if (Auth::attempt($credentials)) {
         // Authentication successful, redirect user to a protected page
-        return redirect()->intended('/');
+        return redirect()->intended('/viewIndex');
     } else {
         // Invalid credentials, redirect back to the login page with an error
         return redirect()->route('login')->withErrors(['message' => 'Invalid credentials, please try again']);
