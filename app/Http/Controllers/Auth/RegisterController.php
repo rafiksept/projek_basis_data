@@ -6,68 +6,56 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
     use RegistersUsers;
 
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
     protected $redirectTo = RouteServiceProvider::HOME;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'nama' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8'],
+            'peran' => ['required', 'string'],
+            'prodi' => ['required', 'string'],
+            'nik' => ['required', 'numeric'],
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+    protected function register(Request $request)
+{
+    $validator = $this->validator($request->all());
+    if ($validator->fails()) {
+        return redirect()->route('sign-up')->withErrors($validator)->withInput();
     }
+    
+
+    $user = new User();
+    $user->name = $request->input('nama');
+    $user->email = $request->input('email');
+    $user->password = Hash::make($request->input('password'));
+    $user->peran = $request->input('peran');
+    $user->prodi = $request->input('prodi');
+    $user->nik = $request->input('nik');
+    $user->role_id = 1;  // JUST DUMMY, PERLU DIGANTI !
+    $user->save();
+
+    // Optionally, you can log in the user or perform any other necessary actions
+
+    return redirect()->route('home')->with('message', 'Registration successful!');
+}
+
+
+
 }
