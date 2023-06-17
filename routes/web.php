@@ -94,3 +94,7 @@ Route::get('/query10', [QueryController::class, 'query10']);
 Route::post('/sign-up', [RegisterController::class, 'register'])->name('sign-up.process');//->middleware('guest');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/editcpmk', [CPMKController::class, 'index'])->name('import.form');
+Route::post('/import-excel', [CPMKController::class, 'import'])->name('import.excel');
+Route::put('/editcpmk/{data}', [CPMKController::class, 'update']);
