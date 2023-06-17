@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('cpl_ti', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_matkul');
-            $table->string('mata_kuliah');
+            $table->string('Kode_Matkul');
+            $table->string('Mata_Kuliah');
             $table->string('S1');
             $table->string('S2');
             $table->string('S3');

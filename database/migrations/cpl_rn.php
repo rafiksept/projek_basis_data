@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('cpl_rn', function (Blueprint $table) {
             $table->id();
             $table->string('Kode_Matkul');
-            $table->string('mata_kuliah');
+            $table->string('Mata_Kuliah');
             $table->string('S1');
             $table->string('S2');
             $table->string('S3');

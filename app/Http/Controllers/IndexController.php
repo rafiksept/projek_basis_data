@@ -13,15 +13,15 @@ class IndexController extends Controller
         $tableName = '';
 
         if ($selectedProdi === 'TSD') {
-            $tableName = 'cpmks_tsd';
+            $tableName = 'cpl_tsd';
         } elseif ($selectedProdi === 'TRKB') {
-            $tableName = 'cpmks_trkb';
+            $tableName = 'cpl_trkb';
         } elseif ($selectedProdi === 'TE') {
-            $tableName = 'cpmks_te';
+            $tableName = 'cpl_te';
         } elseif ($selectedProdi === 'TI') {
-            $tableName = 'cpmks_ti';
+            $tableName = 'cpl_ti';
         } elseif ($selectedProdi === 'RN') {
-            $tableName = 'cpmks_rn';
+            $tableName = 'cpl_rn';
         } else {
             $tableName = 'cpmks_awal';
         }

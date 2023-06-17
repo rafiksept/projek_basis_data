@@ -192,6 +192,11 @@
         <form action="{{ route('updatePassword') }}" method="POST">
             @csrf
             @method('PUT')
+            @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+             @endif
             <div class="edit-password" style="width: 50%; margin: 0 auto; margin-top: 3%; margin-bottom: 7%;">
                 <p style="color: black; font-size: 1em; font-family: 'Outfit'; font-weight: bold;">Apakah Anda ingin mengubah password?</p>
                 <div class="mb-3">
