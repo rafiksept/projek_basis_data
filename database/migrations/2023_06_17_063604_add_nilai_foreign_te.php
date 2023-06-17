@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mahasiswa_to_kelas_matkuls', function (Blueprint $table) {
-            $table->id();
-            $table -> foreignId('mahasiswa_id') -> constrained() -> onDelete('cascade');
-            $table -> foreignId('kelas_matkul_id') -> constrained() -> onDelete('cascade');
-            $table->timestamps();
+        Schema::table('basdut_nilai_te', function (Blueprint $table) {
+            $table->unsignedBigInteger('nilai_id');
+            $table->foreign('nilai_id')->references('id')->on('nilais');
         });
     }
 
@@ -24,5 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
+        //
     }
 };

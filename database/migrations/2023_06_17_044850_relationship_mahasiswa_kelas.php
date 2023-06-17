@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mata_kuliahs', function (Blueprint $table) {
+        Schema::create('mahasiswa_to_kelas_matkuls', function (Blueprint $table) {
             $table->id();
-            $table -> string('kode_matkul');
-            $table -> string('nama');
-            $table -> integer('semester');
-            $table -> string('prodi');
-            $table -> integer('sks');
-            $table -> foreignId('user_id') -> constrained() -> onDelete('cascade');
+            $table->unsignedBigInteger('mahasiswa_ftmm_id');
+            $table->foreign('mahasiswa_ftmm_id')->references('id')->on('mahasiswa_ftmm');
+            $table -> foreignId('kelas_matkul_id') -> constrained() -> onDelete('cascade');
             $table->timestamps();
         });
     }

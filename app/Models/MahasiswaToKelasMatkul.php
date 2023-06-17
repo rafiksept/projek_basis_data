@@ -9,7 +9,7 @@ class MahasiswaToKelasMatkul extends Model
 {
     use HasFactory;
 
-    protected $fillable =['mahasiswa_id','kelas_matkul_id'];
+    protected $fillable =['mahasiswa_ftmm_id','kelas_matkul_id', 'prodi'];
 
     public function mahasiswa(){
         return $this->belongsTo(Mahasiswa::class);

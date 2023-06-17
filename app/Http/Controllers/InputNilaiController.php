@@ -26,11 +26,12 @@ class InputNilaiController extends Controller
         
         $resultKelas = collect(json_decode($kelas))->pluck('id')->all();
         $relasiKelas = DB::table('mahasiswa_to_kelas_matkuls') -> whereIn('kelas_matkul_id', $resultKelas)  -> get();
-        $resultMahasiswa = collect(json_decode($relasiKelas))->pluck('id')->all();
+        $resultMahasiswa = collect(json_decode($relasiKelas))->pluck('mahasiswa_ftmm_id')->all();
 
-        $mahasiswa = DB::table('mahasiswas')
-        ->join('nilais', 'mahasiswas.id', '=', 'nilais.mahasiswa_id')
-        ->select('mahasiswas.*', 'nilais.*')
+        $mahasiswa = DB::table('mahasiswa_ftmm')
+        ->join('nilais', 'mahasiswa_ftmm.id', '=', 'nilais.mahasiswa_ftmm_id')
+        ->select('mahasiswa_ftmm.*', 'nilais.*', 'mahasiswa_ftmm.NIM as NimMahasiswa')
+        ->whereIn('mahasiswa_ftmm.id', $resultMahasiswa )
         ->get();
         return Response::json($mahasiswa);
 
@@ -66,13 +67,17 @@ class InputNilaiController extends Controller
 
         
         foreach ($nilai['nim'] as $key => $value) {
-            $mahasiswa_id= DB::table('mahasiswas') -> where('nim',$nilai['nim'][$key]) -> get();
-
-            $nilais = Nilai::where('mahasiswa_id', $mahasiswa_id[0] -> id)->first();
+            
+            $mahasiswa_id= DB::table('mahasiswa_ftmm') -> where('NIM',$nilai['nim'][$key]) -> get();
+            $kelas_matkuls= DB::table('kelas_matkuls') -> where('id',$kelas) -> get();
+            $mata_kuliahs= DB::table('mata_kuliahs') -> where('id',$kelas_matkuls[0] -> mata_kuliah_id) -> get();
+            $nilais = Nilai::where('mahasiswa_ftmm_id', $mahasiswa_id[0] -> id)->first();
 
             $nilais-> update([
                 'mahasiswa_id' => $mahasiswa_id[0] -> id,
                 'kelas_matkul_id' => $kelas,
+                'NIM' => $mahasiswa_id[0] -> NIM, 
+                'kode_matkul' => $mata_kuliahs[0] -> kode_matkul,
                 'nilai' => $nilai['nilai'][$key],
                 ]);
             }

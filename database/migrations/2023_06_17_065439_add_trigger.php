@@ -12,11 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         DB::unprepared('
-            CREATE TRIGGER insert_nilai AFTER INSERT ON mahasiswa_to_kelas_matkuls
+            CREATE TRIGGER insert_nilai_baru AFTER INSERT ON mahasiswa_to_kelas_matkuls
             FOR EACH ROW
             BEGIN
-                INSERT INTO nilais (mahasiswa_id,kelas_matkul_id, nilai) VALUES (NEW.mahasiswa_id, NEW.kelas_matkul_id,0);
+                INSERT INTO nilais (mahasiswa_ftmm_id,kelas_matkul_id, nilai, NIM, kode_matkul, prodi) VALUES (NEW.mahasiswa_ftmm_id, NEW.kelas_matkul_id,0,"tidak ada", "tidak ada",NEW.prodi);
             END;
+
+
+           
         ');
     }
 
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('insert_nilai_trigger');
+        //
     }
 };

@@ -271,10 +271,13 @@
             nimCell.classList.add("nilai-input");
             input.type = "text";
             input.name = "nim[]";
-            input.value = item.nim;
+            // let str = "Contoh\u00a0teks\u00a0dengan\u00a0karakter\u00a0\u00a0spasi\u00a0non-breaking.";
+            let cleanedStr = item.NimMahasiswa.replace(/\u00a0/g, "");
+
+            input.value = cleanedStr;
             nimCell.appendChild(input);
             var nameCell = document.createElement("td");
-            nameCell.textContent = item.nama;
+            nameCell.textContent = item.Nama;
             var nilaiCell = document.createElement("td");
             var input = document.createElement("input");
             nilaiCell.classList.add("nilai-input");

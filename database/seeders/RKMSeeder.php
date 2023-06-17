@@ -6,19 +6,16 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class MahasiswaSeeder extends Seeder
+class RKMSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        DB::table('mahasiswas')->insert([
-            'nim' => "162112133035",
-            'nama'=> "Lopi ketiduran",
-            'angkatan' => "2021",
-            'prodi' => "TSD"
-            
+        DB::table('mahasiswa_to_kelas_matkuls')->insert([
+            'mahasiswa_ftmm_id' => 1,
+            'kelas_matkul_id' => 1
         ]);
     }
 }

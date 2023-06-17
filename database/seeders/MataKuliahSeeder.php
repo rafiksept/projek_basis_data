@@ -15,6 +15,7 @@ class MataKuliahSeeder extends Seeder
     {
         DB::table('mata_kuliahs')->insert([
             'nama' => "Statistika Matematika",
+            'kode_matkul' => "MAS316",
             'semester' => 4,
             'prodi' => "TSD",
             "sks" => 3,
