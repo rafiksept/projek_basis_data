@@ -16,21 +16,6 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    // public function login(Request $request)
-    // {
-    //     $credentials = $request->all();
-    //     dd($credentials);
-    //     if (Auth::attempt($credentials)) {
-    //         // dd('haruse bener');
-    //         // Authentication successful, redirect user to a protected page
-    //         return redirect()->intended('/');
-    //     } else {
-    //         // dd('haruse salah');
-    //         // Invalid credentials, redirect back to the login page with an error
-    //         return redirect()->route('login')->withErrors(['message' => 'salah, coba ulang']);
-    //     }
-    // }
-
 
     public function login(Request $request)
 {

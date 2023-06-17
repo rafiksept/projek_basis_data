@@ -1,11 +1,3 @@
-<!-- resources/views/auth/login.blade.php -->
-
-@if($errors->any())
-    <div class="alert alert-danger">
-        {{ $errors->first('message') }}
-    </div>
-@endif
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,19 +10,24 @@
     <title>Login</title>
 </head>
 <body>
-    
     <img class="ftmm" src="{{ asset('img/images_login/sidecard2.svg') }}">
     <div class="container">
-        <div class="sidebox">
-        </div>
+        <div class="sidebox"></div>
         <div class="logininfo">
             <div class="formbox">
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
                     <div class="teks-log">
                         <img src="{{ asset('img/images_login/ftmm-logo.png') }}">
-                        <h1 class="teks-h1-log">Selamat Datang !</h1>
+                        <h1 class="teks-h1-log">Selamat Datang!</h1>
                         <h2 class="teks-h2-log">Website ini digunakan untuk menilai Capaian Pembelajaran Prodi maupun Mahasiswa</h2>
+                    </div>
+                    <div class="alert-box">
+                        @if($errors->any())
+                            <div class="alert alert-danger">
+                                <strong style="font-size: 16px;">{{ $errors->first('message') }}</strong>
+                            </div>
+                        @endif
                     </div>
                     <div class="inputbox">
                         <input type="text" name="email" placeholder="Email/NIK" required autofocus>
@@ -54,6 +51,5 @@
             </div>
         </div>
     </div>
-    
 </body>
 </html>
