@@ -306,7 +306,7 @@
                                     @if (!$prodiFilter || $item->Prodi === $prodiFilter)
                                     <tr class="align-items-center">
                                         <td class='text-dark text-center'>{{ $key + 1 }}</td>
-                                        <td class='text-dark text-center'>{{ $item->MataKuliah }}</td>
+                                        <td class='text-dark text-center'>{{ $item->Mata_Kuliah }}</td>
                                         {{-- S --}}
                                         @if ($data->pluck('S1')->contains(fn($value) => $value > 0))
                                         <form action="/editcpmk/{{ $item->id }}" method="POST">
