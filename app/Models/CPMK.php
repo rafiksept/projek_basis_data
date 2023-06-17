@@ -9,7 +9,7 @@ class CPMK extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'MataKuliah',
+        'Mata_Kuliah',
         'S1',
         'S2',
         'S3',
