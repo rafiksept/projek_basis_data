@@ -69,7 +69,7 @@
 
           <div class="register">
             <p class="register-p">Sudah punya akun?
-              <a href="login.html" class="register-link">Login</a>
+                <a href="{{ route('login') }}" class="register-link">Login</a>
             </p>
           </div>
         </form>
