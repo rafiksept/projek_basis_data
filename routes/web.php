@@ -20,4 +20,7 @@ Route::get('/sign-up', function () {
 })->name('sign-up');
 Route::post('/sign-up', [RegisterController::class, 'register'])->name('sign-up.process');//->middleware('guest');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/new-acc', function () {
+    return view('new-acc');
+})->name('new-acc');

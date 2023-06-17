@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -41,6 +42,8 @@ class RegisterController extends Controller
     }
     
 
+    $role = Role::where('nama_peran', $request->input('peran'))->first();
+
     $user = new User();
     $user->name = $request->input('nama');
     $user->email = $request->input('email');
@@ -48,12 +51,14 @@ class RegisterController extends Controller
     $user->peran = $request->input('peran');
     $user->prodi = $request->input('prodi');
     $user->nik = $request->input('nik');
-    $user->role_id = 1;  // JUST DUMMY, PERLU DIGANTI !
+    // $user->role_id = 1;  // JUST DUMMY, PERLU DIGANTI !
+    $user->role_id = $role->id ?? null;
     $user->save();
 
     // Optionally, you can log in the user or perform any other necessary actions
 
-    return redirect()->route('home')->with('message', 'Registration successful!');
+    //  return redirect()->route('new-acc')->with('message', 'Registration successful! Please log in.');
+    return redirect()->route('new-acc')->with('message', 'Registration successful! Please log in.');
 }
 
 
