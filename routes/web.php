@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\InputNilaiController;
+use App\Http\Controllers\CPMKController;
 use App\Http\Controllers\Profile;
 use App\Http\Controllers\GantiPassword;
 use App\Http\Controllers\IndexController;

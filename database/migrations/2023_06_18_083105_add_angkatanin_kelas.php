@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-          
-            $table->string('peran') ;
-            $table->string('prodi');
+        Schema::table('kelas_matkuls', function (Blueprint $table) {
+            $table->string('angkatan');
             
-          
         });
     }
 
@@ -25,8 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('user', function (Blueprint $table) {
-            //
-        });
+        //
     }
 };

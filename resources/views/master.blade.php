@@ -61,16 +61,16 @@
                 </a>
 
                 <div class="navbar-nav w-100">
-                    <a href="dashboard.html" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"
+                    <a href="/viewIndex" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"
                             style="color: #191C24;"></i>Dashboard</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link"><i class="fa fa-laptop me-2"
+                        <a href="/inputNilai" class="nav-link"><i class="fa fa-laptop me-2"
                                 style="color: #191C24;"></i>Input Nilai</a>
 
                         <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"
                                 style="color: #191C24;"></i>Edit CMPK</a>
 
-                        <a href="rapot.html" class="nav-item nav-link"><i class="fa fa-table me-2"
+                        <a href="/raport" class="nav-item nav-link"><i class="fa fa-table me-2"
                                 style="color: #191C24;"></i>Raport</a>
                     </div>
             </nav>
@@ -123,14 +123,19 @@
                         <!-- profile -->
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link" data-bs-toggle="dropdown">
-                                <img class="rounded-circle" src="{{asset("img/user.jpg")}}" alt=""
-                                    style="width: 40px; height: 40px;">
-                                <!-- <span class="d-none d-lg-inline-flex">John Doe</span> -->
+                                @auth
+                                    @if(Auth::user()->image)
+                                        <img src="{{ asset('users/' . Auth::user()->image) }}" alt="image" style="width: 40px; height: 40px;" class="rounded-circle">
+                                    @else
+                                        <img src="{{ asset('users/profiledefault.png') }}" alt="default profile image" style="width: 40px; height: 40px;" class="rounded-circle">
+                                    @endif
+                                @else
+                                    <img src="{{ asset('users/profiledefault.png') }}" alt="default profile image" style="width: 40px; height: 40px;" class="rounded-circle">
+                                @endauth
                             </a>
-                            <div
-                                class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                                <a href="edit-profile.html" class="dropdown-item">Edit Profile</a>
-                                <a href="{{ route('logout') }}" class="dropdown-item">Log Out</a>
+                            <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                                <a href="/edit-profile" class="dropdown-item">Edit Profile</a>
+                                <a href="/logout" class="dropdown-item">Log Out</a>
                             </div>
                         </div>
                     </div>

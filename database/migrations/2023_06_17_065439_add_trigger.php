@@ -17,9 +17,6 @@ return new class extends Migration
             BEGIN
                 INSERT INTO nilais (mahasiswa_ftmm_id,kelas_matkul_id, nilai, NIM, kode_matkul, prodi) VALUES (NEW.mahasiswa_ftmm_id, NEW.kelas_matkul_id,0,"tidak ada", "tidak ada",NEW.prodi);
             END;
-
-
-           
         ');
     }
 
