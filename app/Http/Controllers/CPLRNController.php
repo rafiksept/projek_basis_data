@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\cpl_rn;
 use Illuminate\Support\Facades\Redirect;
-use App\Http\Requests\StoreCPL_RNRequest;
-use App\Http\Requests\UpdateCPL_RNRequest;
+use Illuminate\Http\Request;
 
 class CPLRNController extends Controller
 {
-    public function update(UpdateCPL_RNRequest $request, cpl_rn $data)
+    public function update(Request $request, cpl_rn $data)
     {
         $fields = [
             'S' => 'S',
