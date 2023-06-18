@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\cpl_tsd;
-use App\Http\Requests\UpdateCPL_TSDRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 class CPLTSDController extends Controller
 {
-    public function update(UpdateCPL_TSDRequest $request, cpl_tsd $data)
+    public function update(Request $request, cpl_tsd $data)
     {
         $fields = [
             'S' => 'S',
