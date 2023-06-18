@@ -28,7 +28,6 @@
             <div class="filter">
                 <label for="prodi_filter" style="font-family: 'Outfit'; font-size: x-large; color: black; font-weight: bold;">Program Studi</label>
                 <select name="prodi_filter" id="prodi_filter" class="form-control" onchange="submitForm()">
-                    <option value="">-- Semua Program Studi --</option>
                     <option value="TSD">Teknologi Sains Data</option>
                     <option value="TRKB">Teknik Robotika dan Kecerdasan Buatan</option>
                     <option value="TE">Teknik Elektro</option>
@@ -55,8 +54,6 @@
                     prodiDropdown.value = 'RN';
                 } else if (prodiFilter === 'TRKB') {
                     prodiDropdown.value = 'TRKB';
-                } else if (prodiFilter === '') {
-                    prodiDropdown.value = '';
                 } else {
                     prodiDropdown.value = 'TI';
                 }
@@ -303,107 +300,121 @@
                             </thead>
                             <tbody id="myTableBody">
                                 @foreach ($data as $key => $item)
-                                    @if (!$prodiFilter || $item->Prodi === $prodiFilter)
+                                    @php
+                                        if ($prodiFilter === 'TSD') {
+                                            $action = "/tsd/" . $item->id;
+                                        } elseif ($prodiFilter === 'TI') {
+                                            $action = "/ti/" . $item->id;
+                                        } elseif ($prodiFilter === 'TE') {
+                                            $action = "/te/" . $item->id;
+                                        } elseif ($prodiFilter === 'TRKB') {
+                                            $action = "/trkb/" . $item->id;
+                                        } elseif ($prodiFilter === 'RN') {
+                                            $action = "/rn/" . $item->id;
+                                        } else {
+                                            $action = "/tsd/" . $item->id;
+                                        }
+                                    @endphp
                                     <tr class="align-items-center">
                                         <td class='text-dark text-center'>{{ $key + 1 }}</td>
                                         <td class='text-dark text-center'>{{ $item->Mata_Kuliah }}</td>
                                         {{-- S --}}
                                         @if ($data->pluck('S1')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->S1 }}" value="{{ old('S1', $item->S1) }}" name='S1' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S1');" />
+                                                <input type="text" placeholder="{{ $item->S1 }}" value="{{ old('S1', $item->S1) }}" name='S1' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('S2')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->S2 }}" value="{{ old('S2', $item->S2) }}" name='S2' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S2');" />
+                                                <input type="text" placeholder="{{ $item->S2 }}" value="{{ old('S2', $item->S2) }}" name='S2' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('S3')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->S3 }}" value="{{ old('S3', $item->S3) }}" name='S3' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S3');" />
+                                                <input type="text" placeholder="{{ $item->S3 }}" value="{{ old('S3', $item->S3) }}" name='S3' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('S4')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->S4 }}" value="{{ old('S4', $item->S4) }}" name='S4' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S4');" />
+                                                <input type="text" placeholder="{{ $item->S4 }}" value="{{ old('S4', $item->S4) }}" name='S4' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('S5')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->S5 }}" value="{{ old('S5', $item->S5) }}" name='S5' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S5');" />
+                                                <input type="text" placeholder="{{ $item->S5 }}" value="{{ old('S5', $item->S5) }}" name='S5' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('S6')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->S6 }}" value="{{ old('S6', $item->S6) }}" name='S6' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S6');" />
+                                                <input type="text" placeholder="{{ $item->S6 }}" value="{{ old('S6', $item->S6) }}" name='S6' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('S7')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->S7 }}" value="{{ old('S7', $item->S7) }}" name='S7' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S7');" />
+                                                <input type="text" placeholder="{{ $item->S7 }}" value="{{ old('S7', $item->S7) }}" name='S7' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('S8')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->S8 }}" value="{{ old('S8', $item->S8) }}" name='S8' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S8');" />
+                                                <input type="text" placeholder="{{ $item->S8 }}" value="{{ old('S8', $item->S8) }}" name='S8' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('S9')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->S9 }}" value="{{ old('S9', $item->S9) }}" name='S9' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S9');" />
+                                                <input type="text" placeholder="{{ $item->S9 }}" value="{{ old('S9', $item->S9) }}" name='S9' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('S10')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->S10 }}" value="{{ old('S10', $item->S10) }}" name='S10' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S10');" />
+                                                <input type="text" placeholder="{{ $item->S10 }}" value="{{ old('S10', $item->S10) }}" name='S10' class="nilai-input text-center kuk" />
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
@@ -411,7 +422,7 @@
                                         @if ($data->pluck('S11')->contains(fn($value) => $value > 0))
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->S11 }}" value="{{ old('S11', $item->S11) }}" name='S11' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S11');" />
+                                                <input type="text" placeholder="{{ $item->S11 }}" value="{{ old('S11', $item->S11) }}" name='S11' class="nilai-input text-center kuk" />
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
@@ -419,91 +430,91 @@
 
                                         {{-- KU --}}
                                         @if ($data->pluck('KU1')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->KU1 }}" value="{{ old('KU1', $item->KU1) }}" name='KU1' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S1');" />
+                                                <input type="text" placeholder="{{ $item->KU1 }}" value="{{ old('KU1', $item->KU1) }}" name='KU1' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('KU2')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->KU2 }}" value="{{ old('KU2', $item->KU2) }}" name='KU2' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S2');" />
+                                                <input type="text" placeholder="{{ $item->KU2 }}" value="{{ old('KU2', $item->KU2) }}" name='KU2' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('KU3')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->KU3 }}" value="{{ old('KU3', $item->KU3) }}" name='KU3' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S3');" />
+                                                <input type="text" placeholder="{{ $item->KU3 }}" value="{{ old('KU3', $item->KU3) }}" name='KU3' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('KU4')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->KU4 }}" value="{{ old('KU4', $item->KU4) }}" name='KU4' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S4');" />
+                                                <input type="text" placeholder="{{ $item->KU4 }}" value="{{ old('KU4', $item->KU4) }}" name='KU4' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('KU5')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->KU5 }}" value="{{ old('KU5', $item->KU5) }}" name='KU5' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S5');" />
+                                                <input type="text" placeholder="{{ $item->KU5 }}" value="{{ old('KU5', $item->KU5) }}" name='KU5' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('KU6')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->KU6 }}" value="{{ old('KU6', $item->KU6) }}" name='KU6' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S6');" />
+                                                <input type="text" placeholder="{{ $item->KU6 }}" value="{{ old('KU6', $item->KU6) }}" name='KU6' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('KU7')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->KU7 }}" value="{{ old('KU7', $item->KU7) }}" name='KU7' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S7');" />
+                                                <input type="text" placeholder="{{ $item->KU7 }}" value="{{ old('KU7', $item->KU7) }}" name='KU7' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('KU8')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->KU8 }}" value="{{ old('KU8', $item->KU8) }}" name='KU8' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S8');" />
+                                                <input type="text" placeholder="{{ $item->KU8 }}" value="{{ old('KU8', $item->KU8) }}" name='KU8' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('KU9')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->KU9 }}" value="{{ old('KU9', $item->KU9) }}" name='KU9' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S9');" />
+                                                <input type="text" placeholder="{{ $item->KU9 }}" value="{{ old('KU9', $item->KU9) }}" name='KU9' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
@@ -511,71 +522,71 @@
 
                                         {{-- P --}}
                                         @if ($data->pluck('P1')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->P1 }}" value="{{ old('P1', $item->P1) }}" name='P1' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S1');" />
+                                                <input type="text" placeholder="{{ $item->P1 }}" value="{{ old('P1', $item->P1) }}" name='P1' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('P2')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->P2 }}" value="{{ old('P2', $item->P2) }}" name='P2' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S2');" />
+                                                <input type="text" placeholder="{{ $item->P2 }}" value="{{ old('P2', $item->P2) }}" name='P2' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('P3')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->P3 }}" value="{{ old('P3', $item->P3) }}" name='P3' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S3');" />
+                                                <input type="text" placeholder="{{ $item->P3 }}" value="{{ old('P3', $item->P3) }}" name='P3' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('P4')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->P4 }}" value="{{ old('P4', $item->P4) }}" name='P4' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S4');" />
+                                                <input type="text" placeholder="{{ $item->P4 }}" value="{{ old('P4', $item->P4) }}" name='P4' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('P5')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->P5 }}" value="{{ old('P5', $item->P5) }}" name='P5' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S5');" />
+                                                <input type="text" placeholder="{{ $item->P5 }}" value="{{ old('P5', $item->P5) }}" name='P5' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('P6')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->P6 }}" value="{{ old('P6', $item->P6) }}" name='P6' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S6');" />
+                                                <input type="text" placeholder="{{ $item->P6 }}" value="{{ old('P6', $item->P6) }}" name='P6' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('P7')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->P7 }}" value="{{ old('P7', $item->P7) }}" name='P7' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S7');" />
+                                                <input type="text" placeholder="{{ $item->P7 }}" value="{{ old('P7', $item->P7) }}" name='P7' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
@@ -583,107 +594,106 @@
 
                                         {{-- KK --}}
                                         @if ($data->pluck('KK1')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->KK1 }}" value="{{ old('KK1', $item->KK1) }}" name='KK1' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S1');" />
+                                                <input type="text" placeholder="{{ $item->KK1 }}" value="{{ old('KK1', $item->KK1) }}" name='KK1' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('KK2')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->KK2 }}" value="{{ old('KK2', $item->KK2) }}" name='KK2' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S2');" />
+                                                <input type="text" placeholder="{{ $item->KK2 }}" value="{{ old('KK2', $item->KK2) }}" name='KK2' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('KK3')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->KK3 }}" value="{{ old('KK3', $item->KK3) }}" name='KK3' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S3');" />
+                                                <input type="text" placeholder="{{ $item->KK3 }}" value="{{ old('KK3', $item->KK3) }}" name='KK3' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('KK4')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->KK4 }}" value="{{ old('KK4', $item->KK4) }}" name='KK4' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S4');" />
+                                                <input type="text" placeholder="{{ $item->KK4 }}" value="{{ old('KK4', $item->KK4) }}" name='KK4' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('KK5')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->KK5 }}" value="{{ old('KK5', $item->KK5) }}" name='KK5' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S5');" />
+                                                <input type="text" placeholder="{{ $item->KK5 }}" value="{{ old('KK5', $item->KK5) }}" name='KK5' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('KK6')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->KK6 }}" value="{{ old('KK6', $item->KK6) }}" name='KK6' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S6');" />
+                                                <input type="text" placeholder="{{ $item->KK6 }}" value="{{ old('KK6', $item->KK6) }}" name='KK6' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('KK7')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->KK7 }}" value="{{ old('KK7', $item->KK7) }}" name='KK7' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S7');" />
+                                                <input type="text" placeholder="{{ $item->KK7 }}" value="{{ old('KK7', $item->KK7) }}" name='KK7' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('KK8')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->KK8 }}" value="{{ old('KK8', $item->KK8) }}" name='KK8' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S8');" />
+                                                <input type="text" placeholder="{{ $item->KK8 }}" value="{{ old('KK8', $item->KK8) }}" name='KK8' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('KK9')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->KK9 }}" value="{{ old('KK9', $item->KK9) }}" name='KK9' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S9');" />
+                                                <input type="text" placeholder="{{ $item->KK9 }}" value="{{ old('KK9', $item->KK9) }}" name='KK9' class="nilai-input text-center kuk"/>
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                         @if ($data->pluck('KK10')->contains(fn($value) => $value > 0))
-                                        <form action="/editcpmk/{{ $item->id }}" method="POST">
+                                        <form action="{{ $action }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                             <td class="kuk">
-                                                <input type="text" placeholder="{{ $item->KK10 }}" value="{{ old('KK10', $item->KK10) }}" name='KK10' class="nilai-input text-center kuk" data-id="{{ $item->id }}" onclick="return confirmAndSubmitForm('{{ $item->id }}', 'S10');" />
+                                                <input type="text" placeholder="{{ $item->KK10 }}" value="{{ old('KK10', $item->KK10) }}" name='KK10' class="nilai-input text-center kuk" />
                                                 <input type="hidden" name="prodi_filter" value="{{ $prodiFilter }}">
                                             </td>
                                         </form>
                                         @endif
                                     </tr>
-                                    @endif
                                 @endforeach
                             </tbody>
                         </table>
