@@ -45,7 +45,7 @@
                     </div>
                     <div class="rememberme">
                         <label><input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Ingat Akun</label>
-                        <a href="{{ route('forget-password') }}">Lupa Sandi?</a>
+                        <a href="{{ route('forgot-password') }}">Lupa Sandi?</a>
                     </div>
                     <div class="login-button">
                         <button type="submit" class="btn">Login</button>
