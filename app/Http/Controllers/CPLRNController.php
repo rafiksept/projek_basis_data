@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CPL_RN;
+use App\Models\cpmks_rn;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\StoreCPL_RNRequest;
 use App\Http\Requests\UpdateCPL_RNRequest;
 
 class CPLRNController extends Controller
 {
-    public function update(UpdateCPL_RNRequest $request, CPL_RN $data)
+    public function update(UpdateCPL_RNRequest $request, cpmks_rn $data)
     {
         $fields = [
             'S' => 'S',
@@ -36,13 +36,5 @@ class CPLRNController extends Controller
     private function getRedirectUrl($request)
     {
         return $request->has('prodi_filter') ? '/editcpmk?prodi_filter=' . $request->input('prodi_filter') : '/editcpmk';
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(CPL_RN $cPL_RN)
-    {
-        //
     }
 }
