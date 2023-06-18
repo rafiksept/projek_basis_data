@@ -116,11 +116,11 @@ class CPMKController extends Controller
                 }
 
                 // Cek apakah data dengan Mata_Kuliah dan Prodi yang sama sudah ada
-                $existingDataTSD = CPL_TSD::where('Mata_Kuliah',$rowData['Mata_Kuliah'])->first();
-                $existingDataTI = CPL_TI::where('Mata_Kuliah',$rowData['Mata_Kuliah'])->first();
-                $existingDataTE = CPL_TE::where('Mata_Kuliah',$rowData['Mata_Kuliah'])->first();
-                $existingDataTRKB = CPL_TRKB::where('Mata_Kuliah',$rowData['Mata_Kuliah'])->first();
-                $existingDataRN = CPL_RN::where('Mata_Kuliah',$rowData['Mata_Kuliah'])->first();
+                $existingDataTSD = cpl_tsd::where('Mata_Kuliah',$rowData['Mata_Kuliah'])->first();
+                $existingDataTI = cpl_ti::where('Mata_Kuliah',$rowData['Mata_Kuliah'])->first();
+                $existingDataTE = cpl_te::where('Mata_Kuliah',$rowData['Mata_Kuliah'])->first();
+                $existingDataTRKB = cpl_trkb::where('Mata_Kuliah',$rowData['Mata_Kuliah'])->first();
+                $existingDataRN = cpl_rn::where('Mata_Kuliah',$rowData['Mata_Kuliah'])->first();
                 $prodi = $rowData['Prodi'];
                 if ($existingDataTSD) {
                     // Cek nilai 'Prodi' untuk menentukan tabel tujuan
