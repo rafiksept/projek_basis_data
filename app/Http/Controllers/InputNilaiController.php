@@ -31,6 +31,7 @@ class InputNilaiController extends Controller
         $mahasiswa = DB::table('mahasiswa_ftmm')
         ->join('nilais', 'mahasiswa_ftmm.id', '=', 'nilais.mahasiswa_ftmm_id')
         ->select('mahasiswa_ftmm.*', 'nilais.*', 'mahasiswa_ftmm.NIM as NimMahasiswa')
+        ->where('nilais.kelas_matkul_id', $matkul)
         ->whereIn('mahasiswa_ftmm.id', $resultMahasiswa )
         ->get();
         return Response::json($mahasiswa);
@@ -71,7 +72,8 @@ class InputNilaiController extends Controller
             $mahasiswa_id= DB::table('mahasiswa_ftmm') -> where('NIM',$nilai['nim'][$key]) -> get();
             $kelas_matkuls= DB::table('kelas_matkuls') -> where('id',$kelas) -> get();
             $mata_kuliahs= DB::table('mata_kuliahs') -> where('id',$kelas_matkuls[0] -> mata_kuliah_id) -> get();
-            $nilais = Nilai::where('mahasiswa_ftmm_id', $mahasiswa_id[0] -> id)->first();
+            $nilais = Nilai::where('mahasiswa_ftmm_id', $mahasiswa_id[0] -> id) 
+            -> where('kelas_matkul_id', $kelas_matkuls[0] -> id) ->first();
 
             $nilais-> update([
                 'mahasiswa_id' => $mahasiswa_id[0] -> id,
@@ -79,7 +81,7 @@ class InputNilaiController extends Controller
                 'NIM' => $mahasiswa_id[0] -> NIM, 
                 'kode_matkul' => $mata_kuliahs[0] -> kode_matkul,
                 'nilai' => $nilai['nilai'][$key],
-                ]);
+                ]) ;
             }
 
         return redirect('/inputNilai');
