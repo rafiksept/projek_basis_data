@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class cpl_rn extends Model
 {
+    protected $table = 'cpl_rn';
     protected $fillable = [
         'Mata_Kuliah',
         'S1',

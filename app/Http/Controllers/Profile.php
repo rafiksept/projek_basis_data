@@ -37,26 +37,12 @@ class Profile extends Controller
         if ($nik) {
             $user->nik = $nik;
         }
-        $peran = $request->input('peran');
         $prodi = $request->input('prodi');
         if($prodi){
             $user -> prodi = $prodi;
         }
 
         // Inisialisasi nilai default role_id
-        $role_id = null;
-
-        if ($peran == 'pjmk') {
-            $role_id = 1;
-        } elseif ($peran == 'admin') {
-            $role_id = 2;
-        } 
-
-        // Pastikan role_id telah ditemukan
-        if ($role_id !== null) {
-            // Mengubah role_id pada user
-            $user->role_id = $role_id;
-        }
 
         // Menyimpan perubahan pada database
         if ($user->save()) {

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Nilai;
+use Illuminate\Support\Facades\Auth;
 use Response;
 
 class InputNilaiController extends Controller
@@ -16,9 +17,35 @@ class InputNilaiController extends Controller
     }
 
     public function getMatkul($prodi){
-        $matkul = DB::table('kelas_matkuls') -> where('prodi', $prodi) -> get();
+        $user = Auth::user();
 
-        return Response::json($matkul);
+        if ($user -> role_id == 1) {
+            $matkul = DB::table('kelas_matkuls') -> where('prodi', $prodi) -> get();
+    
+            $mataKuliahIds = $matkul->pluck('mata_kuliah_id')->toArray();
+    
+            $userIds = DB::table('mata_kuliahs')
+                        ->whereIn('id', $mataKuliahIds)
+                        ->pluck('user_id')
+                        ->toArray();
+    
+    
+            $indexesUserLogin = array_keys($userIds, $user -> id);
+    
+            $foundMatkul = [];
+    
+            foreach ($indexesUserLogin as $index) {
+                $dataMatkul = $matkul[$index];
+                $foundMatkul[] = $dataMatkul;
+            }
+        } else {
+            $matkul = DB::table('kelas_matkuls') -> where('prodi', $prodi) -> get();
+            $foundMatkul = $matkul;
+        }
+        
+        
+
+        return Response::json($foundMatkul);
     }
 
     public function getMahasiswa($matkul){

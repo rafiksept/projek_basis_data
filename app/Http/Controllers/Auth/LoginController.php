@@ -13,6 +13,24 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
+    public function viewUser(){
+        if (!Auth::user()) {
+            return redirect('/login');
+        } else {
+            $user = Auth::user();
+            if ($user -> role_id == 1) {
+                return redirect()->intended('/inputNilai');
+            } elseif ($user -> role_id == 3) {
+                return redirect()->intended('/raport');
+            }
+            else {
+                return redirect()->intended('/viewIndex');
+            }
+            
+        }
+        
+    }
+
     public function login(Request $request)
     {
         $credentials = $request->only('password');
@@ -32,7 +50,17 @@ class LoginController extends Controller
 
             if ($user->email_verified_at !== null) {
                 // Authentication successful and user is verified, redirect user to a protected page
-                return redirect()->intended('/');
+                if ($user -> role_id == 1) {
+                    return redirect()->intended('/inputNilai');
+                } elseif ($user -> role_id == 3) {
+                    return redirect()->intended('/raport');
+                }
+                
+                else {
+                    return redirect()->intended('/viewIndex');
+                }
+                
+                
             } else {
                 // User is not verified, show error message
                 return redirect()->route('login')->withErrors(['message' => 'Verifikasi email Anda terlebih dahulu!']);

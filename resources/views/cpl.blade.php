@@ -68,7 +68,7 @@
                         <a href="/inputNilai" class="nav-link"><i class="fa fa-laptop me-2"
                                 style="color: #191C24;"></i>Input Nilai</a>
 
-                        <a href="editcpmk.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"
+                        <a href="/editcpmk" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"
                                 style="color: #191C24;"></i>Edit CMPK</a>
 
                         <a href="/raport" class="nav-item nav-link"><i class="fa fa-table me-2"

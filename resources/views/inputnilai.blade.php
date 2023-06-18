@@ -30,22 +30,38 @@
     <div class="container-fluid position-relative d-flex p-0" style="background: #0E5CA9;">
 
         <!-- Sidebar Start -->
+        @if (Auth::user()->role_id == 1)
         <div class="sidebar pe-4 pb-3">
-            <nav class="navbar">
-                <a href="index.html" class="navbar-brand mx-4 mb-3">
-                    <img src="{{ asset('img/logo_ftmm.png') }}" class=""  style="width: auto; height: 45px; margin-top: 20px;" alt="">
-                </a>
-
-                <div class="navbar-nav w-100">
-                    <a href="/viewIndex" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2" style="color: #191C24;"></i>Dashboard</a>
-                    <div class="nav-item dropdown">
-                        <a href="/inputNilai" class="nav-link active"><i class="fa fa-laptop me-2" style="color: #191C24;"></i>Input Nilai</a>
-                    </div>
-                    <a href="editcpmk.html" class="nav-item nav-link "><i class="fa fa-chart-bar me-2" style="color: #191C24;"></i>Edit CPMK</a>
-                    <a href="/raport" class="nav-item nav-link "><i class="fa fa-table me-2" style="color: #191C24;"></i>Raport</a>
+          <nav class="navbar">
+              <a href="index.html" class="navbar-brand mx-4 mb-3">
+                  <img src="{{ asset('img/logo_ftmm.png') }}" class=""  style="width: auto; height: 45px; margin-top: 20px;" alt="">
+              </a>
+              <div class="navbar-nav w-100">
+                  <div class="nav-item dropdown">
+                    <a href="/inputNilai" class="nav-link active"><i class="fa fa-laptop me-2" style="color: #191C24;"></i>Input Nilai</a>
                 </div>
-            </nav>
-        </div>
+              </div>
+          </nav>
+      </div>
+        @else
+        <div class="sidebar pe-4 pb-3">
+          <nav class="navbar">
+              <a href="index.html" class="navbar-brand mx-4 mb-3">
+                  <img src="{{ asset('img/logo_ftmm.png') }}" class=""  style="width: auto; height: 45px; margin-top: 20px;" alt="">
+              </a>
+
+              <div class="navbar-nav w-100">
+                  <a href="/viewIndex" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2" style="color: #191C24;"></i>Dashboard</a>
+                  <div class="nav-item dropdown">
+                      <a href="/inputNilai" class="nav-link active"><i class="fa fa-laptop me-2" style="color: #191C24;"></i>Input Nilai</a>
+                  </div>
+                  <a href="/editcpmk" class="nav-item nav-link "><i class="fa fa-chart-bar me-2" style="color: #191C24;"></i>Edit CPMK</a>
+                  <a href="/raport" class="nav-item nav-link "><i class="fa fa-table me-2" style="color: #191C24;"></i>Raport</a>
+              </div>
+          </nav>
+      </div>
+        @endif
+
         <!-- Sidebar End -->
 
 
@@ -125,7 +141,7 @@
               <div class="filter">
                 <label for="prodi-filter" style="font-family: 'Outfit'; font-size: x-large; color: black; font-weight: bold;">Program Studi</label>
                 <select id="prodi-filter">
-                    <option disabled selected>Pilih Prodi</option>
+                    <option disabled selected >Pilih Prodi</option>
                     <option value="TSD">Teknologi Sains Data</option>
                     <option value="TRKB">Teknik Robotika dan Kecerdasan Buatan</option>
                     <option value="TE">Teknik Elektro</option>
@@ -137,7 +153,7 @@
             <div class="filter">
               <label for="prodi-filter" style="font-family: 'Outfit'; font-size: x-large; color: black; font-weight: bold;">Mata Kuliah</label>
               <select id="matkul-filter">
-                <option disabled selected>Pilih Matkul</option>
+                <option disabled selected class = "pilih-prodi">Pilih Matkul</option>
               </select>
           </div>
 
@@ -197,6 +213,19 @@
       
         // Menambahkan event listener ke elemen select
         selectElement.addEventListener("change", function() {
+        var selectElement1 = document.getElementById("matkul-filter"); // Ganti "nama-select" dengan ID sesuai elemen <select> Anda
+
+// Mengosongkan semua opsi, kecuali yang disabled
+        var opsi = selectElement1.querySelectorAll("option");
+        for (var i = 0; i < opsi.length; i++) {
+          var option1 = opsi[i];
+          if (!option1.disabled) {
+            option1.remove();
+          }
+        }
+
+
+        selectElement1.querySelector('option.pilih-prodi').selected = true;
           // Mendapatkan nilai terpilih dari select
           var selectedValue = selectElement.value;
       

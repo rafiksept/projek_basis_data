@@ -5,8 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class cpl_trkb extends Model
+class cpl_ti extends Model
 {
+    protected $table = 'cpl_ti';
     protected $fillable = [
         'Mata_Kuliah',
         'S1',
@@ -32,14 +33,16 @@ class cpl_trkb extends Model
         'P1',
         'P2',
         'P3',
-        'P4',
-        'P5',
-        'P6',
         'KK1',
         'KK2',
         'KK3',
         'KK4',
         'KK5',
+        'KK6',
+        'KK7',
+        'KK8',
+        'KK9',
+        'KK10',
     ];
     use HasFactory;
 }

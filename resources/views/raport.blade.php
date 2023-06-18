@@ -56,22 +56,36 @@
 
 
         <!-- Sidebar Start -->
+        @if (Auth::user()->role_id == 3)
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar">
                 <a href="index.html" class="navbar-brand mx-4 mb-3">
-                    <img src="img/logo_ftmm.png" class=""  style="width: auto; height: 45px; margin-top: 20px;" alt="">
+                    <img src="{{ asset('img/logo_ftmm.png') }}" class=""  style="width: auto; height: 45px; margin-top: 20px;" alt="">
                 </a>
-
+  
                 <div class="navbar-nav w-100">
-                    <a href="/viewIndex" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2" style="color: #191C24;"></i>Dashboard</a>
-                    <div class="nav-item dropdown">
-                        <a href="/inputNilai" class="nav-link"><i class="fa fa-laptop me-2" style="color: #191C24;"></i>Input Nilai</a>
-                    </div>
-                    <a href="#" class="nav-item nav-link"><i class="fa fa-chart-bar me-2" style="color: #191C24;"></i>Edit CPMK</a>
-                    <a href="/raport" class="nav-item nav-link active"><i class="fa fa-table me-2" style="color: #191C24;"></i>Raport</a>
+                    <a href="/raport" class="nav-item nav-link  active"><i class="fa fa-table me-2" style="color: #191C24;"></i>Raport</a>
                 </div>
             </nav>
         </div>
+        @else
+        <div class="sidebar pe-4 pb-3">
+          <nav class="navbar">
+              <a href="index.html" class="navbar-brand mx-4 mb-3">
+                  <img src="{{ asset('img/logo_ftmm.png') }}" class=""  style="width: auto; height: 45px; margin-top: 20px;" alt="">
+              </a>
+
+              <div class="navbar-nav w-100">
+                  <a href="/viewIndex" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2" style="color: #191C24;"></i>Dashboard</a>
+                  <div class="nav-item dropdown">
+                      <a href="/inputNilai" class="nav-link"><i class="fa fa-laptop me-2" style="color: #191C24;"></i>Input Nilai</a>
+                  </div>
+                  <a href="/editcpmk" class="nav-item nav-link "><i class="fa fa-chart-bar me-2" style="color: #191C24;"></i>Edit CPMK</a>
+                  <a href="/raport" class="nav-item nav-link  active"><i class="fa fa-table me-2" style="color: #191C24;"></i>Raport</a>
+              </div>
+          </nav>
+      </div>
+        @endif
         <!-- Sidebar End -->
 
 
@@ -144,6 +158,7 @@
             <div class="label">
                 <div class="filter">
                     <select id="opsi-filter">
+                        @if (Auth::user()->role_id == 2)
                         <option value="TSD">Teknologi Sains Data</option>
                         <option value="TE">Teknik Elektro</option>
                         <option value="TI">Teknik Industri</option>
@@ -154,6 +169,24 @@
                         <option value="mhs_TI">Mahasiswa Teknik Industri</option>
                         <option value="mhs_TRKB">Mahasiswa Teknik Robotika dan Kecerdasan Buatan</option>
                         <option value="mhs_RN">Mahasiswa Rekayasa Nanoteknologi</option>
+                        @elseif(Auth::user()->role_id == 3)
+                            @if(Auth::user()->prodi == "TSD")
+                            <option value="TSD">Teknologi Sains Data</option>
+                            <option value="mhs_TSD">Mahasiswa Teknologi Sains Data</option>
+                            @elseif(Auth::user()->prodi == "TE")
+                            <option value="TE">Teknik Elektro</option>
+                            <option value="mhs_TE">Mahasiswa Teknik Elektro</option>
+                            @elseif(Auth::user()->prodi == "TI")
+                            <option value="TI">Teknik Industri</option>
+                            <option value="mhs_TI">Mahasiswa Teknik Industri</option>
+                            @elseif(Auth::user()->prodi == "TRKB")
+                            <option value="TRKB">Teknik Robotika dan Kecerdasan Buatan</option>
+                            <option value="mhs_TRKB">Mahasiswa Teknik Robotika dan Kecerdasan Buatan</option>
+                            @elseif(Auth::user()->prodi == "RN")
+                            <<option value="RN">Rekayasa Nanoteknologi</option>
+                            <option value="mhs_RN">Mahasiswa Rekayasa Nanoteknologi</option>
+                            @endif                        
+                        @endif
                         <!-- Add more options for other values -->
                     </select>
                     <input type="search" id="search-filter" placeholder="Cari Program Studi...">
@@ -251,7 +284,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <h4 style="margin-top:5px; color: black">Hasil : <span id ="hasilCPL">Lulus</span></h4>
+                    <h4 style="margin-top:5px; color: black">Hasil : <span id ="hasilCPL"></span></h4>
                 </div>
             </div>
             
@@ -292,7 +325,7 @@
             var textNode = document.createTextNode(cellValue);
             newCell.appendChild(textNode);
             if (typeof averagedArray[i] === 'number' && !isNaN(averagedArray[i]) ) {
-                if (averagedArray[i] > 50) {
+                if (averagedArray[i] >= 50) {
                     above50Count++
                 newCell.style.color = "green"; // Memberikan warna hijau untuk nilai di atas 50
                 } else if (averagedArray[i] < 50) {

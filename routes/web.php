@@ -34,8 +34,8 @@ use App\Http\Controllers\CPLTRKBController;
 
 
 
-Route::get('/viewIndex', [IndexController::class, 'viewIndex'])->name('viewIndex'); //Untuk Controller Tampilan Awal
-Route::get('/viewCpl', [CplController::class, 'viewCPL'])->name('viewCPL'); //Untuk Controller Tampilan CPL
+Route::get('/viewIndex', [IndexController::class, 'viewIndex'])->name('viewIndex')-> middleware(['auth','adminrole']); //Untuk Controller Tampilan Awal
+Route::get('/viewCpl', [CplController::class, 'viewCPL'])->name('viewCPL')-> middleware(['auth','adminrole']); //Untuk Controller Tampilan CPL
 
 
 Route::get('/edit-profile', function () {return view('edit-profile');});
@@ -46,10 +46,10 @@ Route::get('/melihatMahasiswa',[MahasiswaController::class, 'viewMahasiswa']);
 Route::get('/inputMahasiswa',[MahasiswaController::class, 'createMahasiswa']);
 Route::post('/actionInputMahasiswa',[MahasiswaController::class, 'actionCreateMahasiswa']);
 
-Route::get('/inputNilai', [InputNilaiController::class, "inputNilai"]);
-Route::post('/inputNilaiMahasiswa/{kelas}', [InputNilaiController::class, "inputNilaiMahasiswa"]);
-Route::get('/getMatkul/{prodi}',[InputNilaiController::class, "getMatkul"]);
-Route::get('/getMahasiswa/{matkul}',[InputNilaiController::class, "getMahasiswa"]);
+Route::get('/inputNilai', [InputNilaiController::class, "inputNilai"]) -> middleware(['auth','pjmkrole']);
+Route::post('/inputNilaiMahasiswa/{kelas}', [InputNilaiController::class, "inputNilaiMahasiswa"]) -> middleware(['auth','pjmkrole']);
+Route::get('/getMatkul/{prodi}',[InputNilaiController::class, "getMatkul"]) -> middleware(['auth','pjmkrole']);
+Route::get('/getMahasiswa/{matkul}',[InputNilaiController::class, "getMahasiswa"]) -> middleware(['auth','pjmkrole']);
 
 // // Display the login form
 // Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -68,13 +68,14 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->middleware('web');
 
 // Logout the user
-Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout') -> middleware(['auth']);
+Route::get('/', [LoginController::class, 'viewUser'])->name('logout') -> middleware(['auth']);
 
 
 // forget-password button from login page
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
-Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout') -> middleware('auth');
 
 Route::get('/forget-password', function () {
     return view('auth.forget-password');
@@ -89,26 +90,26 @@ Route::resource('/posts', \App\Http\Controllers\PostController::class);
 
 Route::get('/raport', function () {
     return view('raportawal');
-});
+})  -> middleware(['auth','prodirole']);
 
 
 
-Route::get('/query1', [QueryController::class, 'query1']);
-Route::get('/query2', [QueryController::class, 'query2']);
-Route::get('/query3', [QueryController::class, 'query3']);
-Route::get('/query4', [QueryController::class, 'query4']);
-Route::get('/query5', [QueryController::class, 'query5']);
-Route::get('/query6', [QueryController::class, 'query6']);
-Route::get('/query7', [QueryController::class, 'query7']);
-Route::get('/query8', [QueryController::class, 'query8']);
-Route::get('/query9', [QueryController::class, 'query9']);
-Route::get('/query10', [QueryController::class, 'query10']);
-Route::post('/sign-up', [RegisterController::class, 'register'])->name('sign-up.process');//->middleware('guest');
-Route::post('/sign-up', [RegisterController::class, 'register'])->name('sign-up.process');
+Route::get('/query1', [QueryController::class, 'query1'])  -> middleware(['auth','prodirole']);
+Route::get('/query2', [QueryController::class, 'query2'])  -> middleware(['auth','prodirole']);
+Route::get('/query3', [QueryController::class, 'query3'])  -> middleware(['auth','prodirole']);
+Route::get('/query4', [QueryController::class, 'query4'])  -> middleware(['auth','prodirole']);
+Route::get('/query5', [QueryController::class, 'query5'])  -> middleware(['auth','prodirole']);
+Route::get('/query6', [QueryController::class, 'query6'])  -> middleware(['auth','prodirole']);
+Route::get('/query7', [QueryController::class, 'query7'])  -> middleware(['auth','prodirole']);
+Route::get('/query8', [QueryController::class, 'query8'])  -> middleware(['auth','prodirole']);
+Route::get('/query9', [QueryController::class, 'query9'])  -> middleware(['auth','prodirole']);
+Route::get('/query10', [QueryController::class, 'query10'])  -> middleware(['auth','prodirole']);
+Route::post('/sign-up', [RegisterController::class, 'register'])->name('sign-up.process')  -> middleware(['auth','prodirole']);//->middleware('guest');
+Route::post('/sign-up', [RegisterController::class, 'register'])->name('sign-up.process')  -> middleware(['auth','prodirole']);
 
 Route::get('/new-acc', function () {
     return view('new-acc');
-})->name('new-acc');
+})->name('new-acc') -> middleware('auth');
 
 // Email verification routes
 Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])
@@ -122,16 +123,13 @@ Route::post('/email/verification-notification', function (Request $request) {
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
-Route::get('/', function () {
-    return view('example');
-})->name('home')->middleware(['auth', 'verified']);
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home') -> middleware('auth');
 
-Route::get('/editcpmk', [CPMKController::class, 'index'])->name('import.form');
-Route::post('/import-excel', [CPMKController::class, 'import'])->name('import.excel');
-Route::put('/editcpmk/{data}', [CPMKController::class, 'update']);
-Route::put('/tsd/{data}', [CPLTSDController::class, 'update']);
-Route::put('/ti/{data}', [CPLTIController::class, 'update']);
-Route::put('/te/{data}', [CPLTEController::class, 'update']);
-Route::put('/trkb/{data}', [CPLTRKBController::class, 'update']);
-Route::put('/rn/{data}', [CPLRNController::class, 'update']);
+Route::get('/editcpmk', [CPMKController::class, 'index'])->name('import.form') -> middleware(['auth','adminrole']) ;
+Route::post('/import-excel', [CPMKController::class, 'import'])->name('import.excel') -> middleware(['auth','adminrole']);
+Route::put('/editcpmk/{data}', [CPMKController::class, 'update']) -> middleware(['auth','adminrole']);
+Route::put('/tsd/{data}', [CPLTSDController::class, 'update']) -> middleware(['auth','adminrole']);
+Route::put('/ti/{data}', [CPLTIController::class, 'update']) -> middleware(['auth','adminrole']);
+Route::put('/te/{data}', [CPLTEController::class, 'update']) -> middleware(['auth','adminrole']);
+Route::put('/trkb/{data}', [CPLTRKBController::class, 'update']) -> middleware(['auth','adminrole']);
+Route::put('/rn/{data}', [CPLRNController::class, 'update']) -> middleware(['auth','adminrole']);

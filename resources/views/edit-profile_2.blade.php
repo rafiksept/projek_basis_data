@@ -53,10 +53,10 @@
                 <div class="navbar-nav w-100">
                     <a href="/viewIndex" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2" style="color: #191C24;"></i>Dashboard</a>
                     <div class="nav-item dropdown">
-                        <a href="inputNilai" class="nav-link" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2" style="color: #191C24;"></i>Input Nilai</a>
+                        <a href="/inputNilai" class="nav-link" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2" style="color: #191C24;"></i>Input Nilai</a>
                     </div>
-                    <a href="editcpmk" class="nav-item nav-link"><i class="fa fa-chart-bar me-2" style="color: #191C24;"></i>Edit CMPK</a>
-                    <a href="raport" class="nav-item nav-link"><i class="fa fa-table me-2" style="color: #191C24;"></i>Raport</a>
+                    <a href="/editcpmk" class="nav-item nav-link"><i class="fa fa-chart-bar me-2" style="color: #191C24;"></i>Edit CMPK</a>
+                    <a href="/raport" class="nav-item nav-link"><i class="fa fa-table me-2" style="color: #191C24;"></i>Raport</a>
                 </div>
             </nav>
         </div>

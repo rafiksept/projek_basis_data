@@ -45,6 +45,7 @@
 
 
         <!-- Sidebar Start -->
+       
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar" >
                 <a href="/viewIndex" class="navbar-brand mx-4 mb-3">
@@ -56,7 +57,7 @@
                     <div class="nav-item dropdown">
                         <a href="/inputNilai" class="nav-link" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2" style="color: #191C24;"></i>Input Nilai</a>
                     </div>
-                    <a href="editcpmk" class="nav-item nav-link"><i class="fa fa-chart-bar me-2" style="color: #191C24;"></i>Edit CMPK</a>
+                    <a href="/editcpmk" class="nav-item nav-link"><i class="fa fa-chart-bar me-2" style="color: #191C24;"></i>Edit CMPK</a>
                     <a href="/raport" class="nav-item nav-link"><i class="fa fa-table me-2" style="color: #191C24;"></i>Raport</a>
                 </div>
             </nav>
@@ -153,22 +154,14 @@
                         <input type="text" class="form-control" id="name" name="name" style="background-color: white; border: 1px solid grey;" value={{Auth::user()->name}}>
                     </div>
                     <div class="mb-3">
-                        <label for="input-peran" class="form-label" style="color: black; font-size: 1em; font-family: 'Outfit';">Peran</label>
-                        <select class="form-select mb-3" aria-label="Default select example" id="peran" name="peran" style="background-color: white; font-family: 'Outfit'; border: 1px solid grey;">
-                            <option selected style="font-family: 'Outfit'">Pilih Peranan Anda</option>
-                            <option value="pjmk" style="font-family: 'Outfit'">PJMK</option>
-                            <option value="admin" style="font-family: 'Outfit'">Admin</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
                         <label for="input-prodi" class="form-label" style="color: black; font-size: 1em; font-family: 'Outfit';">Prodi</label>
                         <select class="form-select mb-3" aria-label="Default select example" name="prodi" id="prodi" style="background-color: white; font-family: 'Outfit'; border: 1px solid grey;">
-                            <option selected>Pilih Prodi Anda</option>
-                            <option value="rn" style="font-family: 'Outfit'">Rekayasa Nanoteknologi</option>
-                            <option value="te" style="font-family: 'Outfit'">Teknik Elektro</option>
-                            <option value="ti" style="font-family: 'Outfit'">Teknik Industri</option>
-                            <option value="trkb" style="font-family: 'Outfit'">Teknik Robotika dan Kecerdasan Buatan</option>
-                            <option value="tsd" style="font-family: 'Outfit'">Teknologi Sains Data</option>
+                            <option selected value="0">Pilih Prodi Anda</option>
+                            <option value="RN" style="font-family: 'Outfit'">Rekayasa Nanoteknologi</option>
+                            <option value="TE" style="font-family: 'Outfit'">Teknik Elektro</option>
+                            <option value="TI" style="font-family: 'Outfit'">Teknik Industri</option>
+                            <option value="TRKB" style="font-family: 'Outfit'">Teknik Robotika dan Kecerdasan Buatan</option>
+                            <option value="TSD" style="font-family: 'Outfit'">Teknologi Sains Data</option>
                         </select>
                     </div>
                     <div class=" mb-3">
