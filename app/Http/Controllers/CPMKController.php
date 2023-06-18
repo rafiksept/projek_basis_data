@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\CPMK;
-use App\Models\CPL_TSD;
-use App\Models\CPL_TE;
-use App\Models\CPL_TI;
-use App\Models\CPL_TRKB;
-use App\Models\CPL_RN;
+use App\Models\cpl_tsd;
+use App\Models\cpl_te;
+use App\Models\cpl_ti;
+use App\Models\cpl_trkb;
+use App\Models\cpl_rn;
 use Illuminate\Http\Request;
 use Box\Spout\Reader\ReaderInterface;
 use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
@@ -25,11 +25,11 @@ class CPMKController extends Controller
         
         // $data = CPMK::latest()->filter(request(['prodi_filter']))->get();
 
-        $tabelCPL_TSD = 'cpmks_tsd';
-        $tabelCPL_TI = 'cpmks_ti';
-        $tabelCPL_TE = 'cpmks_te';
-        $tabelCPL_TRKB = 'cpmks_trkb';
-        $tabelCPL_RN = 'cpmks_rn';
+        $tabelCPL_TSD = 'cpl_tsd';
+        $tabelCPL_TI = 'cpl_ti';
+        $tabelCPL_TE = 'cpl_te';
+        $tabelCPL_TRKB = 'cpl_trkb';
+        $tabelCPL_RN = 'cpl_rn';
 
         if ($prodiFilter === 'TSD') {
             $dataTSD = DB::table($tabelCPL_TSD)
@@ -116,11 +116,11 @@ class CPMKController extends Controller
                 }
 
                 // Cek apakah data dengan Mata_Kuliah dan Prodi yang sama sudah ada
-                $existingDataTSD = CPL_TSD::where('Mata_Kuliah',$rowData['Mata_Kuliah'])->first();
-                $existingDataTI = CPL_TI::where('Mata_Kuliah',$rowData['Mata_Kuliah'])->first();
-                $existingDataTE = CPL_TE::where('Mata_Kuliah',$rowData['Mata_Kuliah'])->first();
-                $existingDataTRKB = CPL_TRKB::where('Mata_Kuliah',$rowData['Mata_Kuliah'])->first();
-                $existingDataRN = CPL_RN::where('Mata_Kuliah',$rowData['Mata_Kuliah'])->first();
+                $existingDataTSD = cpl_tsd::where('Mata_Kuliah',$rowData['Mata_Kuliah'])->first();
+                $existingDataTI = cpl_ti::where('Mata_Kuliah',$rowData['Mata_Kuliah'])->first();
+                $existingDataTE = cpl_te::where('Mata_Kuliah',$rowData['Mata_Kuliah'])->first();
+                $existingDataTRKB = cpl_trkb::where('Mata_Kuliah',$rowData['Mata_Kuliah'])->first();
+                $existingDataRN = cpl_rn::where('Mata_Kuliah',$rowData['Mata_Kuliah'])->first();
                 $prodi = $rowData['Prodi'];
                 if ($existingDataTSD) {
                     // Cek nilai 'Prodi' untuk menentukan tabel tujuan

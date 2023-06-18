@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class cpmks_te extends Model
+class cpl_te extends Model
 {
     protected $fillable = [
         'Mata_Kuliah',
