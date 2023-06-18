@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\cpmks_ti;
+use App\Models\cpl_ti;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\StoreCPL_TIRequest;
 use App\Http\Requests\UpdateCPL_TIRequest;
 
 class CPLTIController extends Controller
 {
-    public function update(UpdateCPL_TIRequest $request, cpmks_ti $data)
+    public function update(UpdateCPL_TIRequest $request, cpl_ti $data)
     {
         $fields = [
             'S' => 'S',
