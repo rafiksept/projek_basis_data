@@ -25,11 +25,11 @@ class CPMKController extends Controller
         
         // $data = CPMK::latest()->filter(request(['prodi_filter']))->get();
 
-        $tabelCPL_TSD = 'c_p_l__t_s_d_s';
-        $tabelCPL_TI = 'c_p_l__t_i_s';
-        $tabelCPL_TE = 'c_p_l__t_e_s';
-        $tabelCPL_TRKB = 'c_p_l__t_r_k_b_s';
-        $tabelCPL_RN = 'c_p_l__r_n_s';
+        $tabelCPL_TSD = 'cpmks_tsd';
+        $tabelCPL_TI = 'cpmks_ti';
+        $tabelCPL_TE = 'cpmks_te';
+        $tabelCPL_TRKB = 'cpmks_trkb';
+        $tabelCPL_RN = 'cpmks_rn';
 
         if ($prodiFilter === 'TSD') {
             $dataTSD = DB::table($tabelCPL_TSD)
