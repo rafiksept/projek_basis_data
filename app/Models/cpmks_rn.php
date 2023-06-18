@@ -41,4 +41,5 @@ class cpmks_rn extends Model
         'KK5',
         'KK6',
     ];
+    use HasFactory;
 }
