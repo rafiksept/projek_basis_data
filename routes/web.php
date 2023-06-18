@@ -9,8 +9,11 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\CplController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-<<<<<<< HEAD
 use App\Http\Controllers\QueryController;
+use App\Http\Controllers\Auth\VerificationController;
+use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,12 +25,7 @@ use App\Http\Controllers\QueryController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-=======
-use App\Http\Controllers\Auth\VerificationController;
-use Illuminate\Http\Request;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Support\Facades\Auth;
->>>>>>> abb7d999c42174058a643c1914f6a4395f823f63
+
 
 
 Route::get('/viewIndex', [IndexController::class, 'viewIndex'])->name('viewIndex'); //Untuk Controller Tampilan Awal
@@ -79,7 +77,6 @@ Route::get('/forget-password', function () {
 Route::get('/sign-up', function () {
     return view('auth.sign-up');
 })->name('sign-up');
-<<<<<<< HEAD
 
 //route resource
 Route::resource('/posts', \App\Http\Controllers\PostController::class);
@@ -101,9 +98,7 @@ Route::get('/query8', [QueryController::class, 'query8']);
 Route::get('/query9', [QueryController::class, 'query9']);
 Route::get('/query10', [QueryController::class, 'query10']);
 Route::post('/sign-up', [RegisterController::class, 'register'])->name('sign-up.process');//->middleware('guest');
-=======
 Route::post('/sign-up', [RegisterController::class, 'register'])->name('sign-up.process');
->>>>>>> abb7d999c42174058a643c1914f6a4395f823f63
 
 Route::get('/new-acc', function () {
     return view('new-acc');
@@ -124,3 +119,8 @@ Route::post('/email/verification-notification', function (Request $request) {
 Route::get('/', function () {
     return view('example');
 })->name('home')->middleware(['auth', 'verified']);
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/editcpmk', [CPMKController::class, 'index'])->name('import.form');
+Route::post('/import-excel', [CPMKController::class, 'import'])->name('import.excel');
+Route::put('/editcpmk/{data}', [CPMKController::class, 'update']);
