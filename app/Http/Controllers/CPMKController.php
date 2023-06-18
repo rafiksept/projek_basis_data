@@ -3,10 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\CPMK;
+use App\Models\CPL_TSD;
+use App\Models\CPL_TE;
+use App\Models\CPL_TI;
+use App\Models\CPL_TRKB;
+use App\Models\CPL_RN;
 use Illuminate\Http\Request;
 use Box\Spout\Reader\ReaderInterface;
 use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 
 class CPMKController extends Controller
 {
@@ -16,8 +22,48 @@ class CPMKController extends Controller
     public function index(Request $request)
     {
         $prodiFilter = $request->input('prodi_filter');
-        $data = CPMK::latest()->filter(request(['prodi_filter']))->get();
+        
+        // $data = CPMK::latest()->filter(request(['prodi_filter']))->get();
 
+        $tabelCPL_TSD = 'cpmks_tsd';
+        $tabelCPL_TI = 'cpmks_ti';
+        $tabelCPL_TE = 'cpmks_te';
+        $tabelCPL_TRKB = 'cpmks_trkb';
+        $tabelCPL_RN = 'cpmks_rn';
+
+        if ($prodiFilter === 'TSD') {
+            $dataTSD = DB::table($tabelCPL_TSD)
+            ->select('id','Mata_Kuliah','S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'S10', 'S11', 'KU1', 'KU2', 'KU3', 'KU4', 'KU5', 'KU6', 'KU7', 'KU8', 'KU9', 'P1', 'P2', 'P3', 'P4', 'KK1', 'KK2', 'KK3', 'KK4')
+            ->latest()->get();
+            $data = $dataTSD;
+        } elseif ($prodiFilter === 'TRKB') {
+            $dataTRKB = DB::table($tabelCPL_TRKB)
+            ->select('id','Mata_Kuliah','S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'S10', 'S11', 'KU1', 'KU2', 'KU3', 'KU4', 'KU5', 'KU6', 'KU7', 'KU8', 'KU9', 'P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'KK1', 'KK2', 'KK3', 'KK4', 'KK5')
+            ->latest()->get();
+            $data = $dataTRKB;
+        } elseif ($prodiFilter === 'TE') {
+            $dataTE = DB::table($tabelCPL_TE)
+            ->select('id','Mata_Kuliah','S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'S10', 'S11', 'KU1', 'KU2', 'KU3', 'KU4', 'KU5', 'KU6', 'KU7', 'KU8', 'KU9', 'P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'KK1', 'KK2', 'KK3', 'KK4', 'KK5', 'KK6', 'KK7', 'KK8', 'KK9', 'KK10')
+            ->latest()->get();
+            $data = $dataTE;
+        } elseif ($prodiFilter === 'TI') {
+            $dataTI = DB::table($tabelCPL_TI)
+            ->select('id','Mata_Kuliah','S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'S10', 'S11', 'KU1', 'KU2', 'KU3', 'KU4', 'KU5', 'KU6', 'KU7', 'KU8', 'KU9', 'P1', 'P2', 'P3', 'P4', 'KK1', 'KK2', 'KK3', 'KK4', 'KK5', 'KK6', 'KK7', 'KK8', 'KK9', 'KK10')
+            ->latest()->get();
+            $data = $dataTI;
+        } elseif ($prodiFilter === 'RN') {
+            $dataRN = DB::table($tabelCPL_RN)
+            ->select('id','Mata_Kuliah','S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'S10', 'S11', 'KU1', 'KU2', 'KU3', 'KU4', 'KU5', 'KU6', 'KU7', 'P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'KK1', 'KK2', 'KK3', 'KK4', 'KK5', 'KK6')
+            ->latest()->get();
+            $data = $dataRN;
+        } else {
+            $dataTSD = DB::table($tabelCPL_TSD)
+            ->select('id','Mata_Kuliah','S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'S10', 'S11', 'KU1', 'KU2', 'KU3', 'KU4', 'KU5', 'KU6', 'KU7', 'KU8', 'KU9', 'P1', 'P2', 'P3', 'P4', 'KK1', 'KK2', 'KK3', 'KK4')
+            ->latest()->get();
+            $data = $dataTSD;
+        }
+
+        // $data = $dataTSD->concat($dataTI)->concat($dataTE)->concat($dataTRKB)->concat($dataRN);
         return view('editcpmk', [
             'data' => $data,
             'prodiFilter' => $prodiFilter,
@@ -55,10 +101,10 @@ class CPMKController extends Controller
                     $isFirstRow = false;
                     continue; // Lewati baris pertama (kolom judul)
                 }
-                
+
                 // Menginisialisasi array data dengan nilai default 0
                 $rowData = array_fill_keys($columns, '0');
-                
+
                 foreach ($data as $index => $cell) {
                     $columnName = isset($columns[$index]) ? $columns[$index] : null;
                     if ($columnName !== null && array_key_exists($columnName, $rowData)) {
@@ -68,18 +114,81 @@ class CPMKController extends Controller
                         $rowData[$columnName] = '0';
                     }
                 }
-                
-                // Cek apakah data dengan Mata_Kuliah dan Prodi yang sama sudah ada
-                $existingData = CPMK::where('Mata_Kuliah', $rowData['Mata_Kuliah'])
-                    ->where('Prodi', $rowData['Prodi'])
-                    ->first();
 
-                if ($existingData) {
-                    // Jika sudah ada, update data yang sudah ada dengan nilai baru
-                    $existingData->update($rowData);
+                // Cek apakah data dengan Mata_Kuliah dan Prodi yang sama sudah ada
+                $existingDataTSD = CPL_TSD::where('Mata_Kuliah',$rowData['Mata_Kuliah'])->first();
+                $existingDataTI = CPL_TI::where('Mata_Kuliah',$rowData['Mata_Kuliah'])->first();
+                $existingDataTE = CPL_TE::where('Mata_Kuliah',$rowData['Mata_Kuliah'])->first();
+                $existingDataTRKB = CPL_TRKB::where('Mata_Kuliah',$rowData['Mata_Kuliah'])->first();
+                $existingDataRN = CPL_RN::where('Mata_Kuliah',$rowData['Mata_Kuliah'])->first();
+                $prodi = $rowData['Prodi'];
+                if ($existingDataTSD) {
+                    // Cek nilai 'Prodi' untuk menentukan tabel tujuan
+                    switch ($prodi) {
+                        case 'TSD':
+                            // Simpan data ke tabel cpl_tsd
+                            $existingDataTSD->update($rowData);
+                            break;
+                    }
+                } elseif ($existingDataTI) {
+                    // Cek nilai 'Prodi' untuk menentukan tabel tujuan
+                    switch ($prodi) {
+                        case 'TI':
+                            // Simpan data ke tabel cpl_ti
+                            $existingDataTI->update($rowData);
+                            break;
+                    }
+                } elseif ($existingDataTE) {
+                    // Cek nilai 'Prodi' untuk menentukan tabel tujuan
+                    switch ($prodi) {
+                        case 'TE':
+                            // Simpan data ke tabel cpl_te
+                            $existingDataTE->update($rowData);
+                            break;
+                    }
+                } elseif ($existingDataTRKB) {
+                    // Cek nilai 'Prodi' untuk menentukan tabel tujuan
+                    switch ($prodi) {
+                        case 'TRKB':
+                            // Simpan data ke tabel cpl_trkb
+                            $existingDataTRKB->update($rowData);
+                            break;
+                    }
+                } elseif ($existingDataRN) {
+                    // Cek nilai 'Prodi' untuk menentukan tabel tujuan
+                    switch ($prodi) {
+                        case 'RN':
+                            // Simpan data ke tabel cpl_rn
+                            $existingDataRN->update($rowData);
+                            break;
+                    }
                 } else {
-                    // Jika belum ada, simpan data baru ke database
-                    CPMK::create($rowData);
+                    // Cek nilai 'Prodi' untuk menentukan tabel tujuan
+                    switch ($prodi) {
+                        case 'TSD':
+                            // Simpan data ke tabel cpl_tsd
+                            CPL_TSD::create($rowData);
+                            break;
+                        case 'TI':
+                            // Simpan data ke tabel cpl_ti
+                            CPL_TI::create($rowData);
+                            break;
+                        case 'TE':
+                            // Simpan data ke tabel cpl_te
+                            CPL_TE::create($rowData);
+                            break;
+                        case 'TRKB':
+                            // Simpan data ke tabel cpl_trkb
+                            CPL_TRKB::create($rowData);
+                            break;
+                        case 'RN':
+                            // Simpan data ke tabel cpl_rn
+                            CPL_RN::create($rowData);
+                            break;
+                        default:
+                            // Prodi tidak dikenali, lakukan tindakan yang sesuai
+                            break;
+                    }
                 }
             }
         }
@@ -101,292 +210,5 @@ class CPMKController extends Controller
         }
 
         return $reader;
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, CPMK $data)
-    {
-        if ($request->has('S1')) {
-            $validatedData = $request->validate([
-                'S1' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the S1 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('S2')) {
-            $validatedData = $request->validate([
-                'S2' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the S2 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('S3')) {
-            $validatedData = $request->validate([
-                'S3' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the S3 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('S4')) {
-            $validatedData = $request->validate([
-                'S4' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the S4 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('S5')) {
-            $validatedData = $request->validate([
-                'S5' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the S5 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('S6')) {
-            $validatedData = $request->validate([
-                'S6' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the S6 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('S7')) {
-            $validatedData = $request->validate([
-                'S7' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the S7 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('S8')) {
-            $validatedData = $request->validate([
-                'S8' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the S8 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('S9')) {
-            $validatedData = $request->validate([
-                'S9' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the S9 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('S10')) {
-            $validatedData = $request->validate([
-                'S10' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the S10 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('S11')) {
-            $validatedData = $request->validate([
-                'S11' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the S11 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        
-        } elseif ($request->has('KU1')) {
-            $validatedData = $request->validate([
-                'KU1' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the KU1 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('KU2')) {
-            $validatedData = $request->validate([
-                'KU2' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the KU2 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('KU3')) {
-            $validatedData = $request->validate([
-                'KU3' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the KU3 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('KU4')) {
-            $validatedData = $request->validate([
-                'KU4' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the KU4 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('KU5')) {
-            $validatedData = $request->validate([
-                'KU5' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the KU5 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('KU6')) {
-            $validatedData = $request->validate([
-                'KU6' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the KU6 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('KU7')) {
-            $validatedData = $request->validate([
-                'KU7' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the KU7 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('KU8')) {
-            $validatedData = $request->validate([
-                'KU8' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the KU8 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('KU9')) {
-            $validatedData = $request->validate([
-                'KU9' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the KU9 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        
-        } elseif ($request->has('P1')) {
-            $validatedData = $request->validate([
-                'P1' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the P1 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('P2')) {
-            $validatedData = $request->validate([
-                'P2' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the P2 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('P3')) {
-            $validatedData = $request->validate([
-                'P3' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the P3 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('P4')) {
-            $validatedData = $request->validate([
-                'P4' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the P4 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('P5')) {
-            $validatedData = $request->validate([
-                'P5' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the P5 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('P6')) {
-            $validatedData = $request->validate([
-                'P6' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the P6 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('P7')) {
-            $validatedData = $request->validate([
-                'P7' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the P7 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));    
-
-        } elseif ($request->has('KK1')) {
-            $validatedData = $request->validate([
-                'KK1' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the KK1 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('KK2')) {
-            $validatedData = $request->validate([
-                'KK2' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the KK2 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('KK3')) {
-            $validatedData = $request->validate([
-                'KK3' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the KK3 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('KK4')) {
-            $validatedData = $request->validate([
-                'KK4' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the KK4 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('KK5')) {
-            $validatedData = $request->validate([
-                'KK5' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the KK5 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('KK6')) {
-            $validatedData = $request->validate([
-                'KK6' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the KK6 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('KK7')) {
-            $validatedData = $request->validate([
-                'KK7' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the KK7 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('KK8')) {
-            $validatedData = $request->validate([
-                'KK8' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the KK8 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('KK9')) {
-            $validatedData = $request->validate([
-                'KK9' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the KK9 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } elseif ($request->has('KK10')) {
-            $validatedData = $request->validate([
-                'KK10' => 'required|numeric|min:0|max:1',
-            ]);
-            $data->update($validatedData);
-            $redirectUrl = $this->getRedirectUrl($request);
-            return Redirect::to($redirectUrl)->with('success', "You have successfully changed the KK10 on {$data->Mata_Kuliah}!")->with('prodi_filter', $request->input('prodi_filter'));
-        } 
-    }
-
-    // private function validateDecimalValue($value)
-    // {
-    //     // Validasi nilai desimal dengan rentang 0-1
-    //     if ($value < 0) {
-    //         return 0;
-    //     } elseif ($value > 1) {
-    //         return 1;
-    //     } else {
-    //         return $value;
-    //     }
-    // }
-
-    private function getRedirectUrl($request)
-    {
-        return $request->has('prodi_filter') ? '/editcpmk?prodi_filter=' . $request->input('prodi_filter') : '/editcpmk';
     }
 }
