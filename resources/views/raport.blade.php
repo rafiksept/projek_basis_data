@@ -251,9 +251,80 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <h4 style="margin-top:5px; color: black">Hasil : <span id ="hasilCPL">Lulus</span></h4>
                 </div>
             </div>
             
+
+    <script>
+        var rows = Array.from(document.querySelectorAll("#table-body tr"));
+        var result = rows.map(row => Array.from(row.children, cell => parseFloat(cell.textContent)));
+
+  
+        var transposedArray = result[0].map((_, colIndex) => result.map(row => row[colIndex]));
+     
+        var averagedArray = transposedArray.map(pair => {
+        var nonZeroValues = pair.filter(value => value !== 0);
+        var sum = nonZeroValues.reduce((accumulator, value) => accumulator + value, 0);
+        var average = sum / nonZeroValues.length;
+        return (isNaN(average) || average > 100) ? '' : average.toFixed(1);
+        });
+
+        averagedArray = averagedArray.map(value => value === '' ? '' : parseFloat(value));
+
+
+        var table = document.getElementById("table-body"); // Ganti "myTable" dengan ID tabel yang sesuai
+        var lastRow = table.rows[table.rows.length - 1];
+
+        var newData = [2.5, NaN, 3.5, 4.5, 5.5]; // Misalnya, nilai-nilai baru yang ingin ditambahkan
+
+        var newRow = document.createElement("tr");
+        var above50Count = 0;
+        var nonEmptyCount = 0;
+        for (var i = 0; i < averagedArray.length; i++) {
+        var newCell = document.createElement("td");
+        if (i === 1) {
+        var textNode = document.createTextNode("Rata-rata");
+        newCell.appendChild(textNode);
+        } else {
+            
+            var cellValue = isNaN(averagedArray[i]) ? "" : averagedArray[i];
+            var textNode = document.createTextNode(cellValue);
+            newCell.appendChild(textNode);
+            if (typeof averagedArray[i] === 'number' && !isNaN(averagedArray[i]) ) {
+                if (averagedArray[i] > 50) {
+                    above50Count++
+                newCell.style.color = "green"; // Memberikan warna hijau untuk nilai di atas 50
+                } else if (averagedArray[i] < 50) {
+                newCell.style.color = "red"; // Memberikan warna merah untuk nilai di bawah 50
+                }
+            nonEmptyCount++;
+        }
+        }
+
+        
+        newRow.appendChild(newCell);
+        
+        }
+
+        table.appendChild(newRow);
+
+     
+
+
+        if (above50Count > nonEmptyCount/ 2) {
+            var hasil = document.getElementById("hasilCPL");
+            hasil.textContent = "Lulus";
+            hasil.style.color = "green";
+
+            } else {
+            var hasil = document.getElementById("hasilCPL");
+            hasil.textContent = "Tidak Lulus";
+            hasil.style.color = "red";
+
+            }
+
+    </script>
             
 
     <!-- JavaScript Libraries -->

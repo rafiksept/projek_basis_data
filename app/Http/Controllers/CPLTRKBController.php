@@ -6,10 +6,11 @@ use App\Models\cpmks_trkb;
 use App\Http\Requests\StoreCPL_TRKBRequest;
 use App\Http\Requests\UpdateCPL_TRKBRequest;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Request;
 
 class CPLTRKBController extends Controller
 {
-    public function update(UpdateCPL_TRKBRequest $request, cpmks_trkb $data)
+    public function update(Request $request, cpmks_trkb $data)
     {
         $fields = [
             'S' => 'S',

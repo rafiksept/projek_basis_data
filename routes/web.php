@@ -15,6 +15,11 @@ use App\Http\Controllers\Auth\VerificationController;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\CPLRNController;
+use App\Http\Controllers\CPLTEController;
+use App\Http\Controllers\CPLTIController;
+use App\Http\Controllers\CPLTSDController;
+use App\Http\Controllers\CPLTRKBController;
 
 /*
 |--------------------------------------------------------------------------
@@ -125,3 +130,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/editcpmk', [CPMKController::class, 'index'])->name('import.form');
 Route::post('/import-excel', [CPMKController::class, 'import'])->name('import.excel');
 Route::put('/editcpmk/{data}', [CPMKController::class, 'update']);
+Route::put('/tsd/{data}', [CPLTSDController::class, 'update']);
+Route::put('/ti/{data}', [CPLTIController::class, 'update']);
+Route::put('/te/{data}', [CPLTEController::class, 'update']);
+Route::put('/trkb/{data}', [CPLTRKBController::class, 'update']);
+Route::put('/rn/{data}', [CPLRNController::class, 'update']);

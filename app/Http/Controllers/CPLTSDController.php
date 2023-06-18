@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\cpmks_tsd;
 use App\Http\Requests\UpdateCPL_TSDRequest;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Request;
 
 class CPLTSDController extends Controller
 {
-    public function update(UpdateCPL_TSDRequest $request, cpmks_tsd $data)
+    public function update(Request $request, cpmks_tsd $data)
     {
         $fields = [
             'S' => 'S',

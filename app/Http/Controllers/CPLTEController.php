@@ -6,10 +6,11 @@ use App\Models\cpmks_te;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\StoreCPL_TERequest;
 use App\Http\Requests\UpdateCPL_TERequest;
+use Illuminate\Http\Request;
 
 class CPLTEController extends Controller
 {
-    public function update(UpdateCPL_TERequest $request, cpmks_te $data)
+    public function update(Request $request, cpmks_te $data)
     {
         $fields = [
             'S' => 'S',
