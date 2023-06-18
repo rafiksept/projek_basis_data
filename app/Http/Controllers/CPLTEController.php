@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CPL_TE;
+use App\Models\cpmks_te;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\StoreCPL_TERequest;
 use App\Http\Requests\UpdateCPL_TERequest;
 
 class CPLTEController extends Controller
 {
-    public function update(UpdateCPL_TERequest $request, CPL_TE $data)
+    public function update(UpdateCPL_TERequest $request, cpmks_te $data)
     {
         $fields = [
             'S' => 'S',
@@ -36,13 +36,5 @@ class CPLTEController extends Controller
     private function getRedirectUrl($request)
     {
         return $request->has('prodi_filter') ? '/editcpmk?prodi_filter=' . $request->input('prodi_filter') : '/editcpmk';
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(CPL_TE $cPL_TE)
-    {
-        //
     }
 }
