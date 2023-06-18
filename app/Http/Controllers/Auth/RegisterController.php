@@ -44,9 +44,9 @@ class RegisterController extends Controller
         if ($validator->fails()) {
             return redirect()->route('sign-up')->withErrors($validator)->withInput();
         }
-    
+
         $role = Role::where('nama_peran', $request->input('peran'))->first();
-    
+
         $user = new User();
         $user->name = $request->input('nama');
         $user->email = $request->input('email');
@@ -56,23 +56,19 @@ class RegisterController extends Controller
         $user->nik = $request->input('nik');
         $user->role_id = $role->id ?? null;
         $user->save();
-    
+
         // Generate a new email verification token
         $token = sha1(mt_rand());
-    
+
         // Assign the token and set email_verified_at to null
         $user->verification_code = $token;
         $user->save();
-    
+
         // Send the verification email
         event(new Registered($user));
-    
+
         // Optionally, you can log in the user or perform any other necessary actions
-    
+
         return redirect()->route('new-acc')->with('message', 'Registration successful! Please check your email to verify your account.');
     }
-    
-
-
-
 }
