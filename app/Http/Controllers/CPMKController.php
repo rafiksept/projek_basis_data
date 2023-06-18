@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\CPMK;
-use App\Models\CPL_TSD;
-use App\Models\CPL_TE;
-use App\Models\CPL_TI;
-use App\Models\CPL_TRKB;
-use App\Models\CPL_RN;
+use App\Models\cpl_tsd;
+use App\Models\cpl_te;
+use App\Models\cpl_ti;
+use App\Models\cpl_trkb;
+use App\Models\cpl_rn;
 use Illuminate\Http\Request;
 use Box\Spout\Reader\ReaderInterface;
 use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
