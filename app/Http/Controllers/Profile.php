@@ -39,22 +39,17 @@ class Profile extends Controller
         }
         $peran = $request->input('peran');
         $prodi = $request->input('prodi');
+        if($prodi){
+            $user -> prodi = $prodi;
+        }
 
         // Inisialisasi nilai default role_id
         $role_id = null;
 
-        if ($peran == 'pjmk' && $prodi == 'tsd') {
+        if ($peran == 'pjmk') {
             $role_id = 1;
-        } elseif ($peran == 'pjmk' && $prodi == 'rn') {
-            $role_id = 2;
-        } elseif ($peran == 'pjmk' && $prodi == 'te') {
-            $role_id = 3;
-        } elseif ($peran == 'pjmk' && $prodi == 'ti') {
-            $role_id = 4;
-        } elseif ($peran == 'pjmk' && $prodi == 'trkb') {
-            $role_id = 5;
         } elseif ($peran == 'admin') {
-            $role_id = 6;
+            $role_id = 2;
         } 
 
         // Pastikan role_id telah ditemukan

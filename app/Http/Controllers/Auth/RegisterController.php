@@ -45,7 +45,6 @@ class RegisterController extends Controller
     $user->name = $request->input('nama');
     $user->email = $request->input('email');
     $user->password = Hash::make($request->input('password'));
-    $user->peran = $request->input('peran');
     $user->prodi = $request->input('prodi');
     $user->nik = $request->input('nik');
     $user->role_id = 1;  // JUST DUMMY, PERLU DIGANTI !
