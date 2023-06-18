@@ -35,11 +35,11 @@ class LoginController extends Controller
                 return redirect()->intended('/');
             } else {
                 // User is not verified, show error message
-                return redirect()->route('login')->withErrors(['message' => 'Please verify your email first!']);
+                return redirect()->route('login')->withErrors(['message' => 'Verifikasi email Anda terlebih dahulu!']);
             }
         } else {
             // Invalid credentials, redirect back to the login page with an error
-            return redirect()->route('login')->withErrors(['message' => 'Invalid credentials, please try again']);
+            return redirect()->route('login')->withErrors(['message' => 'Detail akun salah! silahkan coba lagi']);
         }
     }
 

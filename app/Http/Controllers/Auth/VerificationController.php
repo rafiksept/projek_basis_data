@@ -26,7 +26,8 @@ class VerificationController extends Controller
 
     event(new Verified($user));
 
-    return redirect('/')->with('message', 'Email verified successfully.');
+    return redirect('/login')->with('verifyMessage', 'Silahkan login untuk memverifikasi akun Anda');
+
 }
 
 
