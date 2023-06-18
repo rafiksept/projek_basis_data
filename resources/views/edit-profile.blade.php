@@ -30,7 +30,7 @@
     <!-- Template Stylesheet -->
     <link href="css/styledash.css" rel="stylesheet">
     <link rel="icon" type="png" href="img/Logo UNAIR.png">
-
+    
 </head>
 
 <body>
@@ -87,12 +87,13 @@
                             <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                                     @if (Session::has('profile_updated'))
                                         <a href="#" class="dropdown-item">
-                                            <h6 class="fw-normal mb-0">{{ Session::get('profile_updated.message') }}</h6>
-                                            <small>{{ Session::get('profile_updated.time') }}</small>
-                                        </a>
-                                    @endif
+                                        <h6 class="fw-normal mb-0">{{ session('profile_updated')['message'] }}</h6>
+                                        <small>{{ session('profile_updated')['time'] }}</small>
+                                    </a>
+                                @endif
                             </div>
                         </div>
+
 
                         <!-- profile -->
                         <div class="nav-item dropdown">
@@ -116,18 +117,7 @@
                 </div>
             </div>
         </nav>
-        <!-- Navbar End -->
-        @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
 
-        @if(session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
 
 
         <form action="{{ route('update-profile') }}" method="POST" enctype="multipart/form-data">
@@ -189,27 +179,6 @@
                 </div>
             </div>
         </form>
-        <form action="{{ route('updatePassword') }}" method="POST">
-            @csrf
-            @method('PUT')
-            @if(session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-             @endif
-            <div class="edit-password" style="width: 50%; margin: 0 auto; margin-top: 3%; margin-bottom: 7%;">
-                <p style="color: black; font-size: 1em; font-family: 'Outfit'; font-weight: bold;">Apakah Anda ingin mengubah password?</p>
-                <div class="mb-3">
-                    <label for="old_password" class="form-label" style="color: black; font-size: 1em; font-family: 'Outfit';">Password Lama*</label>
-                    <input type="password" class="form-control" id="old_password" name="old_password" style="background-color: white; border: 1px solid grey;">
-                </div>
-                <div class="mb-3">
-                    <label for="new_password" class="form-label" style="color: black; font-size: 1em; font-family: 'Outfit';">Password Baru*</label>
-                    <input type="password" class="form-control" id="new_password" name="new_password" style="background-color: white; border: 1px solid grey;">
-                </div>
-                <button type="submit" class="btn btn-success rounded-pill m-2">Simpan Edit</button>
-            </div>
-        </form>
         
     <!-- Content End -->
 
@@ -228,6 +197,42 @@
 
     <!-- Template Javascript -->
     <script src="js/maindash.js"></script>
+    <style>
+        .fa-bell.animate {
+            animation: bellAnimation 1s infinite;
+            color: rgb(194, 0, 0)
+        }
+    
+        @keyframes bellAnimation {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+    
+    <script>
+        // Animasi bell jika ada notifikasi profile_updated
+        document.addEventListener("DOMContentLoaded", function() {
+            var bellIcon = document.getElementById("bell-icon");
+            var profileUpdatedNotification = document.querySelector(".dropdown-menu .dropdown-item");
+    
+            if (profileUpdatedNotification) {
+                bellIcon.classList.add("animate");
+            }
+    
+            bellIcon.addEventListener("click", function() {
+                bellIcon.classList.remove("animate");
+            });
+        });
+    </script>
+    
+    
 </body>
 
 </html>
