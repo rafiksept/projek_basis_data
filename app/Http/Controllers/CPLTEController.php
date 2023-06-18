@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\cpmks_te;
+use App\Models\cpl_te;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\StoreCPL_TERequest;
 use App\Http\Requests\UpdateCPL_TERequest;
 
 class CPLTEController extends Controller
 {
-    public function update(UpdateCPL_TERequest $request, cpmks_te $data)
+    public function update(UpdateCPL_TERequest $request, cpl_te $data)
     {
         $fields = [
             'S' => 'S',
