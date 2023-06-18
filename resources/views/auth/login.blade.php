@@ -28,6 +28,12 @@
                                 <strong style="font-size: 16px;">{{ $errors->first('message') }}</strong>
                             </div>
                         @endif
+
+                        @if(session('verifyMessage'))
+                            <div class="alert alert-info">
+                                <p>{{ session('verifyMessage') }}</p>
+                            </div>
+                        @endif
                     </div>
                     <div class="inputbox">
                         <input type="text" name="email" placeholder="Email/NIK" required autofocus>

@@ -26,6 +26,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'image',
         'peran',
         'prodi',
+        'email_verified_at',
     ];
 
     /**
@@ -46,4 +47,9 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
 }
